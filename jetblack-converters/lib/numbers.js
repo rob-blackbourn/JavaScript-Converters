@@ -171,10 +171,6 @@ class Fraction {
     }
 }
 
-function maybeInstanceOf(value, constructor) {
-    return typeof (value) === 'object' && value.constructor.name === constructor.name;
-}
-
 class Real {
     constructor(value) {
 
