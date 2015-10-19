@@ -15,9 +15,10 @@ describe('converter', function () {
         var millimeterConverter = repository.find({ name: 'millimeter' });
         var inchConverter = repository.find({ system: 'imperial', name: 'inch' });
 
-        var result = inchConverter.convert(new Fraction(1, 1), millimeterConverter);
+        var millis = inchConverter.convert(new Fraction(1, 1), millimeterConverter);
+        var result = millis.valueOf();
 
-        assert.equal(result.valueOf(), 25.4, "There are 25.4 millimeters in an inch.");
+        assert.equal(result, 25.4, "There are 25.4 millimeters in an inch.");
     });
 
     it('Should convert millimeters to inches', function () {
@@ -25,9 +26,10 @@ describe('converter', function () {
         var millimeterConverter = repository.find({ name: 'millimeter' });
         var inchConverter = repository.find({ system: 'imperial', name: 'inch' });
 
-        var result = millimeterConverter.convert(new Real(25.4), inchConverter);
+        var inches = millimeterConverter.convert(new Real(25.4), inchConverter);
+        var result = inches.valueOf();
 
-        assert.equal(result.valueOf(), 1, "There are 25.4 millimeters in an inch.");
+        assert.equal(result, 1, "There are 25.4 millimeters in an inch.");
     });
 
 })
