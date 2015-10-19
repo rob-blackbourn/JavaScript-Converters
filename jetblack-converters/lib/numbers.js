@@ -182,7 +182,7 @@ class Real {
 
         if (valueType === 'number') {
             if (Math.trunc(value) === value) {
-                this.value = new Fraction(parseInt(value), 1);
+                this.value = new Fraction(value, 1);
             } else {
                 this.value = value;
             }
@@ -223,7 +223,6 @@ class Real {
     ne(number) {
         return areBothRealFractions(this, number) ? this.value.ne(number.value) : this.value != number;
     }
-
 
     lt(number) {
         return areBothRealFractions(this, number) ? this.value.lt(number.value) : this.value < number;
