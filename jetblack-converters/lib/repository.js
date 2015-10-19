@@ -26,19 +26,6 @@ class TransformerRepository {
     }
 }
 
-var filter = function (candidates, criterium, getter) {
-    if (criterium) {
-        var possibles = [];
-        for (var i = 0; i < candidates.length; ++i) {
-            if (getter(candidates[i]) == criterium) {
-                possibles.push(candidates[i]);
-            }
-        }
-        return possibles;
-    } else {
-        return candidates;
-    }
-};
 
 class ConverterRepository {
 
@@ -78,14 +65,14 @@ class ConverterRepository {
         var filtered;
 
         if (possibles.length > 1) {
-            filtered = filter(possibles, this._defaultClassification, function (converter) { return converter.system; });
+            filtered = ConverterRepository.filter(possibles, this._defaultClassification, function (converter) { return converter.system; });
             if (filtered.length > 0) {
                 possibles = filtered;
             }
         }
 
         if (possibles.length > 1) {
-            filtered = filter(possibles, this._defaultAuthority, function (converter) { return converter.authority; });
+            filtered = ConverterRepository.filter(possibles, this._defaultAuthority, function (converter) { return converter.authority; });
             if (filtered.length > 0) {
                 possibles = filtered;
             }
@@ -97,11 +84,11 @@ class ConverterRepository {
     findAll(criteria) {
 
         var possibles = this._converters;
-        possibles = filter(possibles, criteria.domain, function (converter) { return converter.domain; });
-        possibles = filter(possibles, criteria.system, function (converter) { return converter.system; });
-        possibles = filter(possibles, criteria.authority, function (converter) { return converter.authority; });
-        possibles = filter(possibles, criteria.symbol, function (converter) { return converter.symbol; });
-        possibles = filter(possibles, criteria.name, function (converter) { return converter.name; });
+        possibles = ConverterRepository.filter(possibles, criteria.domain, function (converter) { return converter.domain; });
+        possibles = ConverterRepository.filter(possibles, criteria.system, function (converter) { return converter.system; });
+        possibles = ConverterRepository.filter(possibles, criteria.authority, function (converter) { return converter.authority; });
+        possibles = ConverterRepository.filter(possibles, criteria.symbol, function (converter) { return converter.symbol; });
+        possibles = ConverterRepository.filter(possibles, criteria.name, function (converter) { return converter.name; });
 
         return possibles;
     }
@@ -116,6 +103,21 @@ class ConverterRepository {
             }
         }
     }
+
+    static filter(candidates, criterium, getter) {
+        if (criterium) {
+            var possibles = [];
+            for (var i = 0; i < candidates.length; ++i) {
+                if (getter(candidates[i]) == criterium) {
+                    possibles.push(candidates[i]);
+                }
+            }
+            return possibles;
+        } else {
+            return candidates;
+        }
+    }
+
 }
 
 module.exports = new ConverterRepository();
