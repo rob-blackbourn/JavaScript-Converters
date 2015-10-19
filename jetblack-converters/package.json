@@ -1,0 +1,13 @@
+{
+  "name": "jetblack-converters",
+  "version": "0.0.0",
+  "description": "jetblack-converters",
+  "main": "app.js",
+  "author": {
+    "name": "rblackbourn",
+    "email": "rob.blackbourn@googlemail.com"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3"
+  }
+}
