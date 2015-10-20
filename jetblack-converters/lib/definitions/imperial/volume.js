@@ -1,64 +1,75 @@
 ﻿var Converter = require('../../converter');
-var numbers = require('../../numbers');
-var Real = numbers.Real;
 
-module.exports = function (repository) {
+var numbers = require('../../numbers'),
+    Fraction = numbers.Fraction,
+    Real = numbers.Real;
 
-    var minimScalar = new Real(9600);
-    var fluidScrupleScalar = new Real(480);
-    var fluidDrachmScalar = new Real(160);
-    var fluidOunceScalar = new Real(20);
-    var gillScalar = new Real(4);
-    var quartScalar = new Real(2);
-    var gallonScalar = new Real(8);
+module.exports = function (repository, system, authority) {
+
+    var domain = "volume";
 
     var litreConverter = repository.find({ name: 'litre' });
-    var pintConverter = repository.add(new Converter("volume", "imperial", "UK", "pt", "pint", litreConverter,
-        function (value) {
-            return value.mul(0.56826125);
-        }, function (value) {
-            return value.div(0.56826125);
+    var litreScalar = new Real(new Fraction(56826125, 100000000));
+    var pintConverter = repository.add(new Converter(domain, system, authority, "pt", "pint", litreConverter,
+        function (pint) {
+            return pint.mul(litreScalar);
+        }, function (litre) {
+            return litre.div(litreScalar);
         }));
-    repository.add(new Converter("volume", "imperial", "UK", "min", "minim", pintConverter,
-        function (value) {
-            return value.div(minimScalar);
-        }, function (value) {
-            return value.mul(minimScalar);
+
+    var minimScalar = new Real(9600);
+    repository.add(new Converter(domain, system, authority, "min", "minim", pintConverter,
+        function (pint) {
+            return pint.div(minimScalar);
+        }, function (minim) {
+            return minim.mul(minimScalar);
         }));
-    repository.add(new Converter("volume", "imperial", "UK", "fl scruple", "fluid scruple", pintConverter,
-        function (value) {
-            return value.div(fluidScrupleScalar);
-        }, function (value) {
-            return value.mul(fluidScrupleScalar);
+
+    var fluidScrupleScalar = new Real(480);
+    repository.add(new Converter(domain, system, authority, "fl scruple", "fluid scruple", pintConverter,
+        function (pint) {
+            return pint.div(fluidScrupleScalar);
+        }, function (fluidScruple) {
+            return fluidScruple.mul(fluidScrupleScalar);
         }));
-    repository.add(new Converter("volume", "imperial", "UK", "fl dr", "fluid drachm", pintConverter,
-        function (value) {
-            return value.div(fluidDrachmScalar);
-        }, function (value) {
-            return value.mul(fluidDrachmScalar);
+
+    var fluidDrachmScalar = new Real(160);
+    repository.add(new Converter(domain, system, authority, "fl dr", "fluid drachm", pintConverter,
+        function (pint) {
+            return pint.div(fluidDrachmScalar);
+        }, function (fluidDrachm) {
+            return fluidDrachm.mul(fluidDrachmScalar);
         }));
-    repository.add(new Converter("volume", "imperial", "UK", "fl oz", "fluid ounce", pintConverter,
-        function (value) {
-            return value.div(fluidOunceScalar);
-        }, function (value) {
-            return value.mul(fluidOunceScalar);
+
+    var fluidOunceScalar = new Real(20);
+    repository.add(new Converter(domain, system, authority, "fl oz", "fluid ounce", pintConverter,
+        function (pint) {
+            return pint.div(fluidOunceScalar);
+        }, function (fluidOunce) {
+            return fluidOunce.mul(fluidOunceScalar);
         }));
-    repository.add(new Converter("volume", "imperial", "UK", "gl", "gill", pintConverter,
-        function (value) {
-            return value.div(gillScalar);
-        }, function (value) {
-            return value.mul(gillScalar);
+
+    var gillScalar = new Real(4);
+    repository.add(new Converter(domain, system, authority, "gl", "gill", pintConverter,
+        function (pint) {
+            return pint.div(gillScalar);
+        }, function (gill) {
+            return gill.mul(gillScalar);
         }));
-    repository.add(new Converter("volume", "imperial", "UK", "qt", "quart", pintConverter,
-        function (value) {
-            return value.mul(quartScalar);
-        }, function (value) {
-            return value.div(quartScalar);
+
+    var quartScalar = new Real(2);
+    repository.add(new Converter(domain, system, authority, "qt", "quart", pintConverter,
+        function (pint) {
+            return pint.mul(quartScalar);
+        }, function (quart) {
+            return quart.div(quartScalar);
         }));
-    repository.add(new Converter("volume", "imperial", "UK", "gal", "gallon", pintConverter,
-        function (value) {
-            return value.mul(gallonScalar);
-        }, function (value) {
-            return value.div(gallonScalar);
+
+    var gallonScalar = new Real(8);
+    repository.add(new Converter(domain, system, authority, "gal", "gallon", pintConverter,
+        function (pint) {
+            return pint.mul(gallonScalar);
+        }, function (gallon) {
+            return gallon.div(gallonScalar);
         }));
 };

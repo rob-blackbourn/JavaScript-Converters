@@ -1,61 +1,72 @@
 ﻿var Converter = require('../../converter');
-var numbers = require('../../numbers');
-var Real = numbers.Real;
 
-module.exports = function (repository) {
+var numbers = require('../../numbers'),
+    Fraction = numbers.Fraction,
+    Real = numbers.Real;
 
-    var grainScalar = new Real(7000);
-    var dramScalar = new Real(256);
-    var ounceScalar = new Real(16);
-    var stoneScalar = new Real(16);
-    var quarterScalar = new Real(28);
-    var hundredweightScalar = new Real(112);
-    var tonScalar = new Real(2240);
+module.exports = function (repository, system, authority) {
+
+    var domain = "mass";
 
     var grammeConverter = repository.find({ name: 'gramme' });
-    var poundConverter = repository.add(new Converter("mass", "customary", "USA", "lb", "pound", grammeConverter,
+    var grammeScalar = new Real(new Fraction(45359237, 100000));
+    var poundConverter = repository.add(new Converter(domain, system, authority, "lb", "pound", grammeConverter,
         function (value) {
-            return value.mul(453.59237);
+            return value.mul(grammeScalar);
         }, function (value) {
-            return value.div(453.59237);
+            return value.div(grammeScalar);
         }));
-    repository.add(new Converter("mass", "customary", "USA", "gr", "grain", poundConverter,
+
+    var grainScalar = new Real(7000);
+    repository.add(new Converter(domain, system, authority, "gr", "grain", poundConverter,
         function (value) {
             return value.div(grainScalar);
         }, function (value) {
             return value.mul(grainScalar);
         }));
-    repository.add(new Converter("mass", "customary", "USA", "dr", "dram", poundConverter,
+
+    var dramScalar = new Real(256);
+    repository.add(new Converter(domain, system, authority, "dr", "dram", poundConverter,
         function (value) {
             return value.div(dramScalar);
         }, function (value) {
             return value.mul(dramScalar);
         }));
-    repository.add(new Converter("mass", "customary", "USA", "oz", "ounce", poundConverter,
+
+    var ounceScalar = new Real(16);
+    repository.add(new Converter(domain, system, authority, "oz", "ounce", poundConverter,
         function (value) {
             return value.div(ounceScalar);
         }, function (value) {
             return value.mul(ounceScalar);
         }));
-    repository.add(new Converter("mass", "customary", "USA", "st", "stone", poundConverter,
+
+    var stoneScalar = new Real(16);
+    repository.add(new Converter(domain, system, authority, "st", "stone", poundConverter,
         function (value) {
             return value.mul(stoneScalar);
         }, function (value) {
             return value.div(stoneScalar);
         }));
-    repository.add(new Converter("mass", "customary", "USA", "qtr", "quarter", poundConverter,
+
+    var quarterScalar = new Real(28);
+    repository.add(new Converter(domain, system, authority, "qtr", "quarter", poundConverter,
         function (value) {
             return value.mul(quarterScalar);
         }, function (value) {
             return value.div(quarterScalar);
         }));
-    repository.add(new Converter("mass", "customary", "USA", "cwt", "hundredweight", poundConverter,
+
+    var hundredweightScalar = new Real(112);
+    repository.add(new Converter(domain, system, authority, "cwt", "hundredweight", poundConverter,
         function (value) {
             return value.mul(hundredweightScalar);
         }, function (value) {
             return value.div(hundredweightScalar);
         }));
-    repository.add(new Converter("mass", "customary", "USA", "tn", "ton", poundConverter,
+
+    var tonScalar = new Real(2240);
+    repository.add(new Converter(domain, system, authority, "tn", "ton", poundConverter,
         function (value) {
             return value.mul(tonScalar);
         }, function (value) {

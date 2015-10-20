@@ -1,50 +1,59 @@
 ﻿var Converter = require('../../converter');
-var numbers = require('../../numbers');
-var Real = numbers.Real;
 
-module.exports = function (repository) {
+var numbers = require('../../numbers'),
+    Fraction = numbers.Fraction,
+    Real = numbers.Real;
 
-    var minimScalar = new Real(9600);
-    var fluidDramScalar = new Real(160);
-    var fluidOunceScalar = new Real(16);
-    var quartScalar = new Real(2);
-    var gallonScalar = new Real(8);
+module.exports = function (repository, system, authority) {
+
+    var domain = "volume";
 
     var litreConverter = repository.find({ name: 'litre' });
-    var pintConverter = repository.add(new Converter("volume", "customary", "USA", "pt", "pint", litreConverter,
-        function (value) {
-            return value.mul(0.4732);
-        }, function (value) {
-            return value.div(0.4732);
+    var litreScalar = new Real(new Fraction(4732, 10000));
+    var pintConverter = repository.add(new Converter(domain, system, authority, "pt", "pint", litreConverter,
+        function (pint) {
+            return pint.mul(litreScalar);
+        }, function (litre) {
+            return litre.div(litreScalar);
         }));
-    repository.add(new Converter("volume", "customary", "USA", "min", "minim", pintConverter,
-        function (value) {
-            return value.div(minimScalar);
-        }, function (value) {
-            return value.mul(minimScalar);
+
+    var minimScalar = new Real(9600);
+    repository.add(new Converter(domain, system, authority, "min", "minim", pintConverter,
+        function (pint) {
+            return pint.div(minimScalar);
+        }, function (minim) {
+            return minim.mul(minimScalar);
         }));
-    repository.add(new Converter("volume", "customary", "USA", "fl dr", "fluid dram", pintConverter,
-        function (value) {
-            return value.div(fluidDramScalar);
-        }, function (value) {
-            return value.mul(fluidDramScalar);
+
+    var fluidDramScalar = new Real(160);
+    repository.add(new Converter(domain, system, authority, "fl dr", "fluid dram", pintConverter,
+        function (pint) {
+            return pint.div(fluidDramScalar);
+        }, function (fluidDram) {
+            return fluidDram.mul(fluidDramScalar);
         }));
-    repository.add(new Converter("volume", "customary", "USA", "fl oz", "fluid ounce", pintConverter,
-        function (value) {
-            return value.div(fluidOunceScalar);
-        }, function (value) {
-            return value.mul(fluidOunceScalar);
+
+    var fluidOunceScalar = new Real(16);
+    repository.add(new Converter(domain, system, authority, "fl oz", "fluid ounce", pintConverter,
+        function (pint) {
+            return pint.div(fluidOunceScalar);
+        }, function (fluidOunce) {
+            return fluidOunce.mul(fluidOunceScalar);
         }));
-    repository.add(new Converter("volume", "customary", "USA", "qt", "quart", pintConverter,
-        function (value) {
-            return value.mul(quartScalar);
-        }, function (value) {
-            return value.div(quartScalar);
+
+    var quartScalar = new Real(2);
+    repository.add(new Converter(domain, system, authority, "qt", "quart", pintConverter,
+        function (pint) {
+            return pint.mul(quartScalar);
+        }, function (quart) {
+            return quart.div(quartScalar);
         }));
-    repository.add(new Converter("volume", "customary", "USA", "gal", "gallon", pintConverter,
-        function (value) {
-            return value.mul(gallonScalar);
-        }, function (value) {
-            return value.div(gallonScalar);
+
+    var gallonScalar = new Real(8);
+    repository.add(new Converter(domain, system, authority, "gal", "gallon", pintConverter,
+        function (pint) {
+            return pint.mul(gallonScalar);
+        }, function (gallon) {
+            return gallon.div(gallonScalar);
         }));
 };
