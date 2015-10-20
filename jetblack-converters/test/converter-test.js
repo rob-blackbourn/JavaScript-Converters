@@ -100,4 +100,42 @@ describe('converter', function () {
         assert.ok(gasMark.eq(new Real(new Fraction(1, 2))), "121 Celsius is Gas Mark 1/4.");
     });
 
+    it('Should convert gas mark to fahrenheit.', function () {
+
+        var gasMarkConverter = repository.find({ name: 'Gas Mark' });
+        var fahrenheitConverter = repository.find({ name: 'Fahrenheit' });
+
+        var fahrenheit = new Real(275);
+        //var gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
+        //assert.equal(gasMark.valueOf(), 1, "275 Fahrenheit is Gas Mark 1.");
+
+        //fahrenheit = new Real(475);
+        //gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
+        //assert.equal(gasMark.valueOf(), 9, "475 Fahrenheit is Gas Mark 9.");
+
+        //gasMark = new Real(1);
+        //fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
+        //assert.equal(fahrenheit.valueOf(), 275, "Gas Mark 1 is 275 Fahrenheit.");
+
+        gasMark = new Real(9);
+        fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
+        assert.equal(fahrenheit.valueOf(), 476.6, "Gas Mark 9 is 476.6 Fahrenheit.");
+
+        gasMark = new Real(new Fraction(1, 4));
+        fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
+        assert.equal(fahrenheit.valueOf(), 224.6, "Gas Mark 1/4 is 224.6 Fahrenheit.");
+
+        gasMark = new Real(new Fraction(1, 2));
+        fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
+        assert.equal(fahrenheit.valueOf(), 249.8, "Gas Mark 1/2 is 249.8 Fahrenheit.");
+
+        fahrenheit = new Real(225);
+        gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
+        assert.ok(gasMark.eq(new Real(new Fraction(1, 4))), "225 Fahrenheit is Gas Mark 1/4.");
+
+        fahrenheit = new Real(250);
+        gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
+        assert.ok(gasMark.eq(new Real(new Fraction(1, 2))), "250 Fahrenheit is Gas Mark 1/4.");
+    });
+
 })

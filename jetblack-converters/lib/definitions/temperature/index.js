@@ -17,7 +17,7 @@ module.exports = function (repository) {
         }));
 
     var fahrenheitOffset = new Real(32);
-    var fahrenheitScalar = new Fraction(9, 5);
+    var fahrenheitScalar = new Real(new Fraction(9, 5));
     repository.add(new Converter("temperature", "imperial", "UK", '\u00b0F', "Fahrenheit", celsiusConverter,
         function (farenheit) {
             return farenheit.sub(fahrenheitOffset).div(fahrenheitScalar);
