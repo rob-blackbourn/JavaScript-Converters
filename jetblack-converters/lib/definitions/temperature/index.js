@@ -9,18 +9,20 @@ module.exports = function (repository) {
     var kelvinConverter = repository.find({ name: 'Kelvin' });
 
     var celsiusOffset = new Real(new Fraction(27315, 100));
-    repository.add(new Converter("temperature", "metric", "si", '\u00b0C', "Celsius", kelvinConverter,
+    var celsiusConverter = repository.add(new Converter("temperature", "metric", "si", '\u00b0C', "Celsius", kelvinConverter,
         function (value) {
             return value.add(celsiusOffset);
         }, function (value) {
             return value.sub(celsiusOffset);
         }));
 
-    repository.add(new Converter("temperature", "imperial", "UK", '\u00b0F', "Fahrenheit", kelvinConverter,
+    var fahrenheitOffset = new Real(32);
+    var fahrenheitScalar = new Fraction(9, 5);
+    repository.add(new Converter("temperature", "imperial", "UK", '\u00b0F', "Fahrenheit", celsiusConverter,
         function (value) {
-            return value.add(459.67).mul(5).div(9);
+            return value.sub(fahrenheitOffset).div(fahrenheitScalar);
         }, function (value) {
-            return value.mul(9).div(5).sub(459.67);
+            return value.mul(fahrenheitScalar).add(fahrenheitOffset);
         }));
 
     repository.add(new Converter("temperature", "imperial", "UK", "GM", "Gas Mark", kelvinConverter,

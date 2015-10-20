@@ -32,4 +32,34 @@ describe('converter', function () {
         assert.equal(result, 1, "There are 25.4 millimeters in an inch.");
     });
 
+    it('Should convert fahrenheit to celcius.', function () {
+
+        var fahrenheitConverter = repository.find({ name: 'Fahrenheit' });
+        var celsiusConverter = repository.find({ name: 'Celsius' });
+
+        var celsius = new Real(0);
+        var fahrenheit = celsiusConverter.convert(celsius, fahrenheitConverter);
+        assert.equal(fahrenheit.valueOf(), 32, "0 Celsius is 32 Fahrenheit.");
+
+        celsius = new Real(100);
+        fahrenheit = celsiusConverter.convert(celsius, fahrenheitConverter);
+        assert.equal(fahrenheit.valueOf(), 212, "100 Celsius is 212 Fahrenheit.");
+
+        fahrenheit = new Real(32);
+        celsius = fahrenheitConverter.convert(fahrenheit, celsiusConverter);
+        assert.equal(celsius.valueOf(), 0, "32 Fahrenheit is 0 Celsius.");
+
+        fahrenheit = new Real(212);
+        celsius = fahrenheitConverter.convert(fahrenheit, celsiusConverter);
+        assert.equal(celsius.valueOf(), 100, "212 Fahrenheit is 100 Celsius.");
+
+        fahrenheit = new Real(-40);
+        celsius = fahrenheitConverter.convert(fahrenheit, celsiusConverter);
+        assert.equal(celsius.valueOf(), -40, "-40 Fahrenheit is -40 Celsius.");
+
+        celsius = new Real(-40);
+        fahrenheit = celsiusConverter.convert(celsius, fahrenheitConverter);
+        assert.equal(fahrenheit.valueOf(), -40, "-40 Celsius is -40 Fahrenheit.");
+    });
+
 })
