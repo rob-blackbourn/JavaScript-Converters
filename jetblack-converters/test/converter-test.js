@@ -14,7 +14,6 @@ describe('converter', function () {
 
         var meterConverter = repository.find({ name: 'meter' });
 
-        var meters = new Real(1);
         var result = meterConverter.convert(1, meterConverter);
 
         assert.equal(result.valueOf(), 1, "A meter is a meter.");
@@ -56,28 +55,22 @@ describe('converter', function () {
         var fahrenheitConverter = repository.find({ name: 'Fahrenheit' });
         var celsiusConverter = repository.find({ name: 'Celsius' });
 
-        var celsius = new Real(0);
-        var fahrenheit = celsiusConverter.convert(celsius, fahrenheitConverter);
+        var fahrenheit = celsiusConverter.convert(0, fahrenheitConverter);
         assert.equal(fahrenheit.valueOf(), 32, "0 Celsius is 32 Fahrenheit.");
 
-        celsius = new Real(100);
-        fahrenheit = celsiusConverter.convert(celsius, fahrenheitConverter);
+        fahrenheit = celsiusConverter.convert(100, fahrenheitConverter);
         assert.equal(fahrenheit.valueOf(), 212, "100 Celsius is 212 Fahrenheit.");
 
-        fahrenheit = new Real(32);
-        celsius = fahrenheitConverter.convert(fahrenheit, celsiusConverter);
+        var celsius = fahrenheitConverter.convert(32, celsiusConverter);
         assert.equal(celsius.valueOf(), 0, "32 Fahrenheit is 0 Celsius.");
 
-        fahrenheit = new Real(212);
-        celsius = fahrenheitConverter.convert(fahrenheit, celsiusConverter);
+        celsius = fahrenheitConverter.convert(212, celsiusConverter);
         assert.equal(celsius.valueOf(), 100, "212 Fahrenheit is 100 Celsius.");
 
-        fahrenheit = new Real(-40);
-        celsius = fahrenheitConverter.convert(fahrenheit, celsiusConverter);
+        celsius = fahrenheitConverter.convert(-40, celsiusConverter);
         assert.equal(celsius.valueOf(), -40, "-40 Fahrenheit is -40 Celsius.");
 
-        celsius = new Real(-40);
-        fahrenheit = celsiusConverter.convert(celsius, fahrenheitConverter);
+        fahrenheit = celsiusConverter.convert(-40, fahrenheitConverter);
         assert.equal(fahrenheit.valueOf(), -40, "-40 Celsius is -40 Fahrenheit.");
     });
 
@@ -86,36 +79,28 @@ describe('converter', function () {
         var gasMarkConverter = repository.find({ name: 'Gas Mark' });
         var celsiusConverter = repository.find({ name: 'Celsius' });
 
-        var celsius = new Real(135);
-        var gasMark = celsiusConverter.convert(celsius, gasMarkConverter);
+        var gasMark = celsiusConverter.convert(135, gasMarkConverter);
         assert.equal(gasMark.valueOf(), 1, "135 Celsius is Gas Mark 1.");
 
-        celsius = new Real(247);
-        gasMark = celsiusConverter.convert(celsius, gasMarkConverter);
+        gasMark = celsiusConverter.convert(247, gasMarkConverter);
         assert.equal(gasMark.valueOf(), 9, "247 Celsius is Gas Mark 9.");
 
-        gasMark = new Real(1);
-        celsius = gasMarkConverter.convert(gasMark, celsiusConverter);
+        var celsius = gasMarkConverter.convert(1, celsiusConverter);
         assert.equal(celsius.valueOf(), 135, "Gas Mark 1 is 135 Celsius.");
 
-        gasMark = new Real(9);
-        celsius = gasMarkConverter.convert(gasMark, celsiusConverter);
+        celsius = gasMarkConverter.convert(9, celsiusConverter);
         assert.equal(celsius.valueOf(), 247, "Gas Mark 9 is 247 Celsius.");
 
-        gasMark = new Real(new Fraction(1, 4));
-        celsius = gasMarkConverter.convert(gasMark, celsiusConverter);
+        celsius = gasMarkConverter.convert(new Fraction(1, 4), celsiusConverter);
         assert.equal(celsius.valueOf(), 107, "Gas Mark 1/4 is 107 Celsius.");
 
-        gasMark = new Real(new Fraction(1, 2));
-        celsius = gasMarkConverter.convert(gasMark, celsiusConverter);
+        celsius = gasMarkConverter.convert(new Fraction(1, 2), celsiusConverter);
         assert.equal(celsius.valueOf(), 121, "Gas Mark 1/2 is 121 Celsius.");
 
-        celsius = new Real(107);
-        gasMark = celsiusConverter.convert(celsius, gasMarkConverter);
+        gasMark = celsiusConverter.convert(107, gasMarkConverter);
         assert.ok(gasMark.eq(new Real(new Fraction(1, 4))), "107 Celsius is Gas Mark 1/4.");
 
-        celsius = new Real(121);
-        gasMark = celsiusConverter.convert(celsius, gasMarkConverter);
+        gasMark = celsiusConverter.convert(121, gasMarkConverter);
         assert.ok(gasMark.eq(new Real(new Fraction(1, 2))), "121 Celsius is Gas Mark 1/4.");
     });
 
@@ -124,36 +109,30 @@ describe('converter', function () {
         var gasMarkConverter = repository.find({ name: 'Gas Mark' });
         var fahrenheitConverter = repository.find({ name: 'Fahrenheit' });
 
-        var fahrenheit = new Real(275);
-        var gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
+        var gasMark, fahrenheit;
+
+        gasMark = fahrenheitConverter.convert(275, gasMarkConverter);
         assert.equal(gasMark.valueOf(), 1, "275 Fahrenheit is Gas Mark 1.");
 
-        fahrenheit = new Real(475);
-        gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
+        gasMark = fahrenheitConverter.convert(475, gasMarkConverter);
         assert.equal(gasMark.valueOf(), 9, "475 Fahrenheit is Gas Mark 9.");
 
-        gasMark = new Real(1);
-        fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
+        fahrenheit = gasMarkConverter.convert(1, fahrenheitConverter);
         assert.equal(fahrenheit.valueOf(), 275, "Gas Mark 1 is 275 Fahrenheit.");
 
-        gasMark = new Real(9);
-        fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
+        fahrenheit = gasMarkConverter.convert(9, fahrenheitConverter);
         assert.equal(fahrenheit.valueOf(), 476.6, "Gas Mark 9 is 476.6 Fahrenheit.");
 
-        gasMark = new Real(new Fraction(1, 4));
-        fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
+        fahrenheit = gasMarkConverter.convert(new Fraction(1, 4), fahrenheitConverter);
         assert.equal(fahrenheit.valueOf(), 224.6, "Gas Mark 1/4 is 224.6 Fahrenheit.");
 
-        gasMark = new Real(new Fraction(1, 2));
-        fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
+        fahrenheit = gasMarkConverter.convert(new Fraction(1, 2), fahrenheitConverter);
         assert.equal(fahrenheit.valueOf(), 249.8, "Gas Mark 1/2 is 249.8 Fahrenheit.");
 
-        fahrenheit = new Real(225);
-        gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
+        gasMark = fahrenheitConverter.convert(225, gasMarkConverter);
         assert.ok(gasMark.eq(new Real(new Fraction(1, 4))), "225 Fahrenheit is Gas Mark 1/4.");
 
-        fahrenheit = new Real(250);
-        gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
+        gasMark = fahrenheitConverter.convert(250, gasMarkConverter);
         assert.ok(gasMark.eq(new Real(new Fraction(1, 2))), "250 Fahrenheit is Gas Mark 1/4.");
     });
 
