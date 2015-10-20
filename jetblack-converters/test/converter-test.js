@@ -10,7 +10,7 @@ var converters = require('../lib/index.js'),
 
 describe('converter', function () {
 
-    it('Should convert inches to millimeters', function () {
+    it('Should convert inches to millimeters.', function () {
 
         var millimeterConverter = repository.find({ name: 'millimeter' });
         var inchConverter = repository.find({ system: 'imperial', name: 'inch' });
@@ -21,7 +21,7 @@ describe('converter', function () {
         assert.equal(result, 25.4, "There are 25.4 millimeters in an inch.");
     });
 
-    it('Should convert millimeters to inches', function () {
+    it('Should convert millimeters to inches.', function () {
 
         var millimeterConverter = repository.find({ name: 'millimeter' });
         var inchConverter = repository.find({ system: 'imperial', name: 'inch' });
