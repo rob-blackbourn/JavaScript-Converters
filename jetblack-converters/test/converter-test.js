@@ -106,16 +106,16 @@ describe('converter', function () {
         var fahrenheitConverter = repository.find({ name: 'Fahrenheit' });
 
         var fahrenheit = new Real(275);
-        //var gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
-        //assert.equal(gasMark.valueOf(), 1, "275 Fahrenheit is Gas Mark 1.");
+        var gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
+        assert.equal(gasMark.valueOf(), 1, "275 Fahrenheit is Gas Mark 1.");
 
-        //fahrenheit = new Real(475);
-        //gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
-        //assert.equal(gasMark.valueOf(), 9, "475 Fahrenheit is Gas Mark 9.");
+        fahrenheit = new Real(475);
+        gasMark = fahrenheitConverter.convert(fahrenheit, gasMarkConverter);
+        assert.equal(gasMark.valueOf(), 9, "475 Fahrenheit is Gas Mark 9.");
 
-        //gasMark = new Real(1);
-        //fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
-        //assert.equal(fahrenheit.valueOf(), 275, "Gas Mark 1 is 275 Fahrenheit.");
+        gasMark = new Real(1);
+        fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
+        assert.equal(fahrenheit.valueOf(), 275, "Gas Mark 1 is 275 Fahrenheit.");
 
         gasMark = new Real(9);
         fahrenheit = gasMarkConverter.convert(gasMark, fahrenheitConverter);
