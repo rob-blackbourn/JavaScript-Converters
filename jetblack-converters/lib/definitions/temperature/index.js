@@ -10,25 +10,41 @@ module.exports = function (repository) {
 
     var celsiusOffset = new Real(new Fraction(27315, 100));
     var celsiusConverter = repository.add(new Converter("temperature", "metric", "si", '\u00b0C', "Celsius", kelvinConverter,
-        function (value) {
-            return value.add(celsiusOffset);
-        }, function (value) {
-            return value.sub(celsiusOffset);
+        function (celsius) {
+            return celsius.add(celsiusOffset);
+        }, function (kelvin) {
+            return kelvin.sub(celsiusOffset);
         }));
 
     var fahrenheitOffset = new Real(32);
     var fahrenheitScalar = new Fraction(9, 5);
     repository.add(new Converter("temperature", "imperial", "UK", '\u00b0F', "Fahrenheit", celsiusConverter,
-        function (value) {
-            return value.sub(fahrenheitOffset).div(fahrenheitScalar);
-        }, function (value) {
-            return value.mul(fahrenheitScalar).add(fahrenheitOffset);
+        function (farenheit) {
+            return farenheit.sub(fahrenheitOffset).div(fahrenheitScalar);
+        }, function (celsius) {
+            return celsius.mul(fahrenheitScalar).add(fahrenheitOffset);
         }));
 
-    repository.add(new Converter("temperature", "imperial", "UK", "GM", "Gas Mark", kelvinConverter,
-        function (value) {
-            return value.mul(125).div(9).add(422.038);
-        }, function (value) {
-            return value.sub(422.038).mul(9).div(125);
+    var gasMarkScalar = new Real(14);
+    var gasMarkOffset = new Real(121);
+    repository.add(new Converter("temperature", "imperial", "UK", "GM", "Gas Mark", celsiusConverter,
+        function (gasMark) {
+            if (gasMark.lt(new Real(new Fraction(3, 8)))) {
+                return new Real(107);
+            } else if (gasMark.lt(new Real(new Fraction(3,4)))) {
+                return new Real(121);
+            } else {
+                gasMark = new Real(Math.round(gasMark.valueOf()));
+                return gasMark.mul(gasMarkScalar).add(gasMarkOffset);
+            }
+        }, function (celsius) {
+            if (celsius.lt(new Real(114))) {
+                return new Real(new Fraction(1, 4));
+            } else if (celsius.lt(new Real(128))) {
+                return new Real(new Fraction(1, 2));
+            } else {
+                var gasMark = celsius.sub(gasMarkOffset).div(gasMarkScalar);
+                return new Real(Math.round(gasMark));
+            }
         }));
 };

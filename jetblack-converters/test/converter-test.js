@@ -62,4 +62,42 @@ describe('converter', function () {
         assert.equal(fahrenheit.valueOf(), -40, "-40 Celsius is -40 Fahrenheit.");
     });
 
+    it('Should convert gas mark to celcius.', function () {
+
+        var gasMarkConverter = repository.find({ name: 'Gas Mark' });
+        var celsiusConverter = repository.find({ name: 'Celsius' });
+
+        var celsius = new Real(135);
+        var gasMark = celsiusConverter.convert(celsius, gasMarkConverter);
+        assert.equal(gasMark.valueOf(), 1, "135 Celsius is Gas Mark 1.");
+
+        celsius = new Real(247);
+        gasMark = celsiusConverter.convert(celsius, gasMarkConverter);
+        assert.equal(gasMark.valueOf(), 9, "247 Celsius is Gas Mark 9.");
+
+        gasMark = new Real(1);
+        celsius = gasMarkConverter.convert(gasMark, celsiusConverter);
+        assert.equal(celsius.valueOf(), 135, "Gas Mark 1 is 135 Celsius.");
+
+        gasMark = new Real(9);
+        celsius = gasMarkConverter.convert(gasMark, celsiusConverter);
+        assert.equal(celsius.valueOf(), 247, "Gas Mark 9 is 247 Celsius.");
+
+        gasMark = new Real(new Fraction(1, 4));
+        celsius = gasMarkConverter.convert(gasMark, celsiusConverter);
+        assert.equal(celsius.valueOf(), 107, "Gas Mark 1/4 is 107 Celsius.");
+
+        gasMark = new Real(new Fraction(1, 2));
+        celsius = gasMarkConverter.convert(gasMark, celsiusConverter);
+        assert.equal(celsius.valueOf(), 121, "Gas Mark 1/2 is 121 Celsius.");
+
+        celsius = new Real(107);
+        gasMark = celsiusConverter.convert(celsius, gasMarkConverter);
+        assert.ok(gasMark.eq(new Real(new Fraction(1, 4))), "107 Celsius is Gas Mark 1/4.");
+
+        celsius = new Real(121);
+        gasMark = celsiusConverter.convert(celsius, gasMarkConverter);
+        assert.ok(gasMark.eq(new Real(new Fraction(1, 2))), "121 Celsius is Gas Mark 1/4.");
+    });
+
 })
