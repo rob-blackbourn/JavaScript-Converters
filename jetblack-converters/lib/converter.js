@@ -57,39 +57,46 @@ class Converter {
             value = new Real(value);
         }
 
+        if (this === to) {
+            return value;
+        }
+
+        var converters = Converter.prepareConverters(this, to);
+
+        for (let converter of converters.from) {
+            if (converter.toTarget) {
+                value = converter.toTarget(value);
+            }
+        }
+
+        for (let converter of converters.to) {
+            if (converter.fromTarget) {
+                value = converter.fromTarget(value);
+            }
+        }
+
+        return value;
+    }
+
+    static prepareConverters(fromConverter, toConverter) {
+
+        var fromConverters = [];
+        while (fromConverter) {
+            fromConverters.push(fromConverter);
+            fromConverter = fromConverter.targetConverter;
+        }
+
         var toConverters = [];
-        var toConverter = to;
-        while (toConverter.fromTarget) {
+        while (toConverter) {
+            var index = fromConverters.indexOf(toConverter);
+            if (index != -1) {
+                return { from: fromConverters.slice(0, index), to: toConverters };
+            }
             toConverters.push(toConverter);
             toConverter = toConverter.targetConverter;
         }
 
-        var from = this;
-        while (from.toTarget) {
-
-            if (from == to) {
-                return value;
-            }
-
-            value = from.toTarget(value);
-
-            var index = toConverters.indexOf(from);
-
-            if (index == -1) {
-                from = from.targetConverter;
-            } else {
-                for (; index >= 0; --index) {
-                    value = toConverters[index].fromTarget(value);
-                }
-                return value;
-            }
-        }
-
-        while (toConverters.length > 0) {
-            value = toConverters.pop().fromTarget(value);
-        }
-
-        return value;
+        return null;
     }
 }
 

@@ -10,15 +10,36 @@ var converters = require('../lib/index.js'),
 
 describe('converter', function () {
 
+    it('Should convert meters to meters.', function () {
+
+        var meterConverter = repository.find({ name: 'meter' });
+
+        var meters = new Real(1);
+        var result = meterConverter.convert(1, meterConverter);
+
+        assert.equal(result.valueOf(), 1, "A meter is a meter.");
+    });
+
+    it('Should convert centimeters to millimeters.', function () {
+
+        var centimeterConverter = repository.find({ name: 'centimeter' });
+        var millimeterConverter = repository.find({ name: 'millimeter' });
+
+        var millimeters = centimeterConverter.convert(10, millimeterConverter);
+        assert.equal(millimeters.valueOf(), 100, "There are 100 millimeters in 10 centimeters.");
+
+        var centimeters = millimeterConverter.convert(100, centimeterConverter);
+        assert.equal(centimeters.valueOf(), 10, "There are 10 centimeters in 100 millimeters.");
+    });
+
     it('Should convert inches to millimeters.', function () {
 
         var millimeterConverter = repository.find({ name: 'millimeter' });
         var inchConverter = repository.find({ system: 'imperial', name: 'inch' });
 
-        var millis = inchConverter.convert(new Fraction(1, 1), millimeterConverter);
-        var result = millis.valueOf();
+        var millimeters = inchConverter.convert(1, millimeterConverter);
 
-        assert.equal(result, 25.4, "There are 25.4 millimeters in an inch.");
+        assert.equal(millimeters.valueOf(), 25.4, "There are 25.4 millimeters in an inch.");
     });
 
     it('Should convert millimeters to inches.', function () {
@@ -26,10 +47,8 @@ describe('converter', function () {
         var millimeterConverter = repository.find({ name: 'millimeter' });
         var inchConverter = repository.find({ system: 'imperial', name: 'inch' });
 
-        var inches = millimeterConverter.convert(new Real(25.4), inchConverter);
-        var result = inches.valueOf();
-
-        assert.equal(result, 1, "There are 25.4 millimeters in an inch.");
+        var inches = millimeterConverter.convert(25.4, inchConverter);
+        assert.ok(Math.abs(inches.valueOf() - 1) <= Number.EPSILON, "There are 25.4 millimeters in an inch.");
     });
 
     it('Should convert fahrenheit to celcius.', function () {
