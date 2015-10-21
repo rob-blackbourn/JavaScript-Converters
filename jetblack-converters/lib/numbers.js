@@ -146,6 +146,14 @@ class Fraction {
         return new Fraction(this._numerator * value.denominator, this._denominator * value.numerator);
     }
 
+    abs(value) {
+        if (this._numerator >= 0) {
+            return this;
+        } else {
+            return new Fraction(-this._numerator, this._denominator);
+        }
+    }
+
     isNaN() {
         return this._denominator == 0;
     }
@@ -168,6 +176,23 @@ class Fraction {
         } while (Math.abs(x - h1 / k1) > x * tolerance);
 
         return new Fraction(Math.trunc(h1), Math.trunc(k1));
+    }
+
+    roundTo(denominators) {
+        var min = new Fraction(1, 1);
+        var best = null;
+        for (let denominator of denominators) {
+            var a = this.numerator * denominator;
+            var b = this.denominator * denominator;
+            var c = Math.round(a / this.denominator);
+            var f = new Fraction(c, denominator);
+            var error = f.sub(this).abs();
+            if (error.lt(min)) {
+                best = f;
+                min = error;
+            }
+        }
+        return best;
     }
 }
 

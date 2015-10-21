@@ -70,4 +70,30 @@ describe('numbers', function () {
         assert.ok(c1.eq(c3), "Should print and parse back a fraction.");
         assert.equal(c2, c4, "The print representation of a fraction shouldn't change.");
     });
+
+    it('Should round fraction to denominator', function () {
+
+        var f1, f2, adj = new Fraction(1, 100);
+
+        f1 = new Fraction(1, 5);
+        f2 = f1.add(adj).roundTo([2, 3, 4, 5]);
+        assert.ok(f2.eq(f1));
+
+        f1 = new Fraction(1, 4);
+        f2 = f1.add(adj).roundTo([2, 3, 4, 5]);
+        assert.ok(f2.eq(f1));
+
+        f1 = new Fraction(1, 3);
+        f2 = f1.add(adj).roundTo([2, 3, 4, 5]);
+        assert.ok(f2.eq(f1));
+
+        f1 = new Fraction(1, 2);
+        f2 = f1.add(adj).roundTo([2, 3, 4, 5]);
+        assert.ok(f2.eq(f1));
+
+        f1 = new Fraction(1, 4);
+        f2 = f1.add(adj).roundTo([2, 3, 4, 5]);
+        assert.ok(f2.eq(f1));
+    })
+
 })
