@@ -60,6 +60,8 @@
     <Compile Include="lib\definitions\utensils\USA.js" />
     <Compile Include="lib\index.js" />
     <Compile Include="lib\numbers\index.js" />
+    <Compile Include="lib\numbers\fraction.js" />
+    <Compile Include="lib\numbers\real.js" />
     <Compile Include="lib\repository.js" />
     <Compile Include="lib\transformer.js" />
     <Compile Include="test\converter-test.js">
