@@ -1,31 +1,30 @@
 ﻿"use strict";
 
-class TransformerRepository {
+class DomainConverterRepository {
 
     constructor() {
-        this._transformers = [];
+        this._domainConverters = [];
     }
 
-    get transformers() {
-        return this._transformers;
+    get domainConverters() {
+        return this._domainConverters;
     }
 
-    add(transformer) {
-        this._transformers.push(transformer);
-        return transformer;
+    add(domainConverter) {
+        this._domainConverters.push(domainConverter);
+        return domainConverter;
     }
 
-    find(domain, targetDomain) {
-        for (var index = 0; index < this._transformers.length; ++index) {
-            var transformer = this._transformers[index];
-            if ((domain == transformer.converter.domain && targetDomain == transformer.targetConverter.domain)
-                || (domain == transformer.targetConverter.domain && targetDomain == transformer.converter.domain)) {
-                return transformer;
+    find(sourceDomain, targetDomain) {
+        for (var index = 0; index < this._domainConverters.length; ++index) {
+            var domainConverter = this._domainConverters[index];
+            if ((sourceDomain == domainConverter.sourceConverter.domain && targetDomain == domainConverter.targetConverter.domain)
+                || (sourceDomain == domainConverter.targetConverter.domain && targetDomain == domainConverter.sourceConverter.domain)) {
+                return domainConverter;
             }
         }
     }
 }
-
 
 class ConverterRepository {
 
@@ -35,7 +34,7 @@ class ConverterRepository {
         this._defaultAuthority = defaultAuthority;
 
         this._converters = [];
-        this._transformers = new TransformerRepository();
+        this._domainConverters = new DomainConverterRepository();
     }
 
     get defaultClassification() {
@@ -50,8 +49,8 @@ class ConverterRepository {
         return this._converters;
     }
 
-    get transformers() {
-        return this._transformers;
+    get domainConverters() {
+        return this._domainConverters;
     }
 
     add(converter) {
@@ -97,9 +96,9 @@ class ConverterRepository {
         if (converter.domain == targetConverter.domain) {
             return converter.convert(value, targetConverter);
         } else {
-            var transformer = this._transformers.find(converter.domain, targetConverter.domain);
-            if (transformer) {
-                return transformer.transform(value, converter, targetConverter);
+            var domainConverter = this._domainConverters.find(converter.domain, targetConverter.domain);
+            if (domainConverter) {
+                return domainConverter.convert(value, converter, targetConverter);
             }
         }
     }

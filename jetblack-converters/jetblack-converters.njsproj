@@ -63,7 +63,7 @@
     <Compile Include="lib\numbers\fraction.js" />
     <Compile Include="lib\numbers\real.js" />
     <Compile Include="lib\repository.js" />
-    <Compile Include="lib\transformer.js" />
+    <Compile Include="lib\domain-converter.js" />
     <Compile Include="test\converter-test.js">
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>

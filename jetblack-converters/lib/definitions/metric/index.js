@@ -1,5 +1,5 @@
 ﻿var UnitConverter = require('../../unit-converter');
-var Transformer = require('../../transformer');
+var DomainConverter = require('../../domain-converter');
 
 var numbers = require('../../numbers'),
     Fraction = numbers.Fraction,
@@ -76,8 +76,8 @@ module.exports = function (repository) {
     var kelvinConverter = repository.add(new UnitConverter("temperature", "metric", "si", "K", "Kelvin", null, null, null));
     createSiConverters(repository, kelvinConverter);
 
-    repository.transformers.add(
-        new Transformer(
+    repository.domainConverters.add(
+        new DomainConverter(
             grammeConverter, litreConverter,
             function (value, scalar) { return value.mul(scalar); },
             function (value, scalar) { return value.div(scalar); }))

@@ -1,16 +1,16 @@
 ﻿"use strict";
 
-class Transformer {
+class DomainConverter {
 
-    constructor(converter, targetConverter, convertTo, convertFrom) {
-        this._converter = converter;
+    constructor(sourceConverter, targetConverter, convertTo, convertFrom) {
+        this._sourceConverter = sourceConverter;
         this._targetConverter = targetConverter;
         this._convertTo = convertTo;
         this._convertFrom = convertFrom;
     }
 
-    get converter() {
-        return this._converter;
+    get sourceConverter() {
+        return this._sourceConverter;
     }
 
     get targetConverter() {
@@ -25,21 +25,21 @@ class Transformer {
         return this._convertFrom;
     }
 
-    transform(value, from, to, scalar) {
-        if (from.domain == this._converter.domain) {
-            value = from.convert(value, this._converter);
+    convert(value, from, to, scalar) {
+        if (from.domain == this._sourceConverter.domain) {
+            value = from.convert(value, this._sourceConverter);
             value = this._convertTo(value, scalar);
             return this._targetConverter.convert(value, to);
-        } else if (to.domain == this._converter.domain) {
+        } else if (to.domain == this._sourceConverter.domain) {
             value = from.convert(value, this.targetConverter);
             value = this._convertFrom(value, scalar);
-            return this._converter.convert(value, to);
+            return this._sourceConverter.convert(value, to);
         }
     }
 
     toString() {
-        return this._converter.domain + " to " + this._targetConverter.domain;
+        return this._sourceConverter.domain + " to " + this._targetConverter.domain;
     }
 }
 
-module.exports = Transformer;
+module.exports = DomainConverter;
