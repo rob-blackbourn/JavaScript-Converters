@@ -12,7 +12,7 @@
  */
 class Fraction {
     constructor(numerator, denominator) {
-        if (Math.trunc(numerator) == numerator && Math.trunc(denominator) == denominator) {
+        if (Number.isInteger(numerator) && Number.isInteger(denominator)) {
             this._numerator = numerator;
             this._denominator = denominator;
             Fraction.simplify(this);
