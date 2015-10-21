@@ -1,4 +1,4 @@
-﻿var Converter = require('../../converter');
+﻿var UnitConverter = require('../../unit-converter');
 
 var numbers = require('../../numbers'),
     Fraction = numbers.Fraction,
@@ -9,7 +9,7 @@ module.exports = function (repository) {
     var kelvinConverter = repository.find({ name: 'Kelvin' });
 
     var celsiusOffset = new Real(new Fraction(27315, 100));
-    var celsiusConverter = repository.add(new Converter("temperature", "metric", "si", '\u00b0C', "Celsius", kelvinConverter,
+    var celsiusConverter = repository.add(new UnitConverter("temperature", "metric", "si", '\u00b0C', "Celsius", kelvinConverter,
         function (celsius) {
             return celsius.add(celsiusOffset);
         }, function (kelvin) {
@@ -18,7 +18,7 @@ module.exports = function (repository) {
 
     var fahrenheitOffset = new Real(32);
     var fahrenheitScalar = new Real(new Fraction(9, 5));
-    repository.add(new Converter("temperature", "imperial", "UK", '\u00b0F', "Fahrenheit", celsiusConverter,
+    repository.add(new UnitConverter("temperature", "imperial", "UK", '\u00b0F', "Fahrenheit", celsiusConverter,
         function (farenheit) {
             return farenheit.sub(fahrenheitOffset).div(fahrenheitScalar);
         }, function (celsius) {
@@ -27,7 +27,7 @@ module.exports = function (repository) {
 
     var gasMarkScalar = new Real(14);
     var gasMarkOffset = new Real(121);
-    repository.add(new Converter("temperature", "imperial", "UK", "GM", "Gas Mark", celsiusConverter,
+    repository.add(new UnitConverter("temperature", "imperial", "UK", "GM", "Gas Mark", celsiusConverter,
         function (gasMark) {
             if (gasMark.lt(new Real(new Fraction(3, 8)))) {
                 return new Real(107);

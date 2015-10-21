@@ -1,4 +1,4 @@
-﻿var Converter = require('../../converter');
+﻿var UnitConverter = require('../../unit-converter');
 var Transformer = require('../../transformer');
 
 var numbers = require('../../numbers'),
@@ -35,7 +35,7 @@ function createSiConverters(repository, targetConverter) {
 
     prefixes.map(function (prefix) {
         repository.add(
-            new Converter(
+            new UnitConverter(
                 targetConverter.domain,
                 targetConverter.system,
                 targetConverter.authority,
@@ -61,19 +61,19 @@ function createSiConverters(repository, targetConverter) {
 }
 
 module.exports = function (repository) {
-    var meterConverter = repository.add(new Converter("length", "metric", "si", "m", "meter", null, null, null));
+    var meterConverter = repository.add(new UnitConverter("length", "metric", "si", "m", "meter", null, null, null));
     createSiConverters(repository, meterConverter);
 
-    var grammeConverter = repository.add(new Converter("mass", "metric", "si", "g", "gramme", null, null, null));
+    var grammeConverter = repository.add(new UnitConverter("mass", "metric", "si", "g", "gramme", null, null, null));
     createSiConverters(repository, grammeConverter);
 
-    var secondConverter = repository.add(new Converter("temperature", "metric", "si", "s", "second", null, null, null));
+    var secondConverter = repository.add(new UnitConverter("temperature", "metric", "si", "s", "second", null, null, null));
     createSiConverters(repository, secondConverter);
 
-    var litreConverter = repository.add(new Converter("volume", "metric", "si", "l", "litre", null, null, null));
+    var litreConverter = repository.add(new UnitConverter("volume", "metric", "si", "l", "litre", null, null, null));
     createSiConverters(repository, litreConverter);
 
-    var kelvinConverter = repository.add(new Converter("temperature", "metric", "si", "K", "Kelvin", null, null, null));
+    var kelvinConverter = repository.add(new UnitConverter("temperature", "metric", "si", "K", "Kelvin", null, null, null));
     createSiConverters(repository, kelvinConverter);
 
     repository.transformers.add(

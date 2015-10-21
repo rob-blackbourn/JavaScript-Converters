@@ -1,7 +1,7 @@
 ﻿var assert = require('assert');
 
 var converters = require('../lib'),
-    Converter = converters.Converter,
+    UnitConverter = converters.UnitConverter,
     repository = converters.repository,
     numbers = converters.numbers,
     Fraction = numbers.Fraction,
@@ -136,4 +136,14 @@ describe('converter', function () {
         assert.ok(gasMark.eq(new Real(new Fraction(1, 2))), "250 Fahrenheit is Gas Mark 1/4.");
     });
 
+    it('Should convert UK cups to millilitres', function () {
+
+        var cupConverter = repository.find({ authority: 'UK', name: 'cup' });
+        var millilitreConverter = repository.find({ name: 'millilitre' });
+
+        var millilitres, cups, value;
+
+        var millilitres = cupConverter.convert(1, millilitreConverter);
+        assert.equal(Math.round(millilitres.valueOf() * 10) / 10, 284.1, '1 uk cup is about 284.1 millilitres');
+    });
 })

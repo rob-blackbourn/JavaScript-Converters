@@ -2,7 +2,7 @@
 
 var Real = require('./numbers').Real;
 
-class Converter {
+class UnitConverter {
 
     constructor(domain, system, authority, symbol, name, targetConverter, toTarget, fromTarget) {
         this._domain = domain;
@@ -61,7 +61,7 @@ class Converter {
             return value;
         }
 
-        var converters = Converter.prepareConverters(this, to);
+        var converters = UnitConverter.prepareConverters(this, to);
 
         for (let converter of converters.from) {
             if (converter.toTarget) {
@@ -100,4 +100,4 @@ class Converter {
     }
 }
 
-module.exports = Converter;
+module.exports = UnitConverter;

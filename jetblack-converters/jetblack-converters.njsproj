@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
-    <Compile Include="lib\converter.js" />
+    <Compile Include="lib\unit-converter.js" />
     <Compile Include="lib\definitions\customary\index.js" />
     <Compile Include="lib\definitions\customary\length.js" />
     <Compile Include="lib\definitions\customary\mass.js" />

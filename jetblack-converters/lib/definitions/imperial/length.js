@@ -1,4 +1,4 @@
-﻿var Converter = require('../../converter');
+﻿var UnitConverter = require('../../unit-converter');
 
 var numbers = require('../../numbers'),
     Fraction = numbers.Fraction,
@@ -10,7 +10,7 @@ module.exports = function (repository, system, authority) {
 
     var meterConverter = repository.find({ name: 'meter' });
     var meterScalar = new Real(new Fraction(3048, 10000));
-    var feetConverter = repository.add(new Converter(domain, system, authority, "ft", "feet", meterConverter,
+    var feetConverter = repository.add(new UnitConverter(domain, system, authority, "ft", "feet", meterConverter,
         function (feet) {
             return feet.mul(meterScalar);
         }, function (meter) {
@@ -18,7 +18,7 @@ module.exports = function (repository, system, authority) {
         }));
 
     var thouScalar = new Real(12000);
-    repository.add(new Converter(domain, system, authority, "th", "thou", feetConverter,
+    repository.add(new UnitConverter(domain, system, authority, "th", "thou", feetConverter,
         function (feet) {
             return feet.div(thouScalar);
         }, function (thou) {
@@ -26,7 +26,7 @@ module.exports = function (repository, system, authority) {
         }));
 
     var inchScalar = new Real(12);
-    repository.add(new Converter(domain, system, authority, "in", "inch", feetConverter,
+    repository.add(new UnitConverter(domain, system, authority, "in", "inch", feetConverter,
         function (feet) {
             return feet.div(inchScalar);
         }, function (inch) {
@@ -34,7 +34,7 @@ module.exports = function (repository, system, authority) {
         }));
 
     var yardScalar = new Real(3);
-    repository.add(new Converter(domain, system, authority, "yd", "yard", feetConverter,
+    repository.add(new UnitConverter(domain, system, authority, "yd", "yard", feetConverter,
         function (feet) {
             return feet.mul(yardScalar);
         }, function (yard) {
@@ -42,7 +42,7 @@ module.exports = function (repository, system, authority) {
         }));
 
     var chainScalar = new Real(66);
-    repository.add(new Converter(domain, system, authority, "ch", "chain", feetConverter,
+    repository.add(new UnitConverter(domain, system, authority, "ch", "chain", feetConverter,
         function (feet) {
             return feet.mul(chainScalar);
         }, function (chain) {
@@ -50,7 +50,7 @@ module.exports = function (repository, system, authority) {
         }));
 
     var furlongScalar = new Real(660);
-    repository.add(new Converter(domain, system, authority, "fur", "furlong", feetConverter,
+    repository.add(new UnitConverter(domain, system, authority, "fur", "furlong", feetConverter,
         function (feet) {
             return feet.mul(furlongScalar);
         }, function (furlong) {
@@ -58,7 +58,7 @@ module.exports = function (repository, system, authority) {
         }));
 
     var mileScalar = new Real(5280);
-    repository.add(new Converter(domain, system, authority, "mi", "mile", feetConverter,
+    repository.add(new UnitConverter(domain, system, authority, "mi", "mile", feetConverter,
         function (feet) {
             return feet.mul(mileScalar);
         }, function (mile) {
@@ -66,7 +66,7 @@ module.exports = function (repository, system, authority) {
         }));
 
     var leagueScalar = new Real(15840);
-    repository.add(new Converter(domain, system, authority, "lea", "league", feetConverter,
+    repository.add(new UnitConverter(domain, system, authority, "lea", "league", feetConverter,
         function (feet) {
             return feet.mul(leagueScalar);
         }, function (league) {
