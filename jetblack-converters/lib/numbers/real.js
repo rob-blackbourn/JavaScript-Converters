@@ -8,7 +8,7 @@ class Real {
         var valueType = typeof (value);
 
         if (valueType === 'number') {
-            if (Math.trunc(value) === value) {
+            if (Number.isInteger(value)) {
                 this.value = new Fraction(value, 1);
             } else {
                 this.value = value;
