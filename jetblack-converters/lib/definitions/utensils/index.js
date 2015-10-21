@@ -1,9 +1,9 @@
-﻿var australia = require('./Australia');
-var canada = require('./Canada');
-var fda = require('./FDA');
-var japan = require('./Japan');
-var uk = require('./UK');
-var usa = require('./USA');
+﻿var australia = require('./Australia'),
+    canada = require('./Canada'),
+    fda = require('./FDA'),
+    japan = require('./Japan'),
+    uk = require('./UK'),
+    usa = require('./USA');
 
 module.exports = function (repository) {
     australia(repository);

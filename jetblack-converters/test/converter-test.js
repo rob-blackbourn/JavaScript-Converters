@@ -1,6 +1,6 @@
 ﻿var assert = require('assert');
 
-var converters = require('../lib/index.js'),
+var converters = require('../lib'),
     Converter = converters.Converter,
     repository = converters.repository,
     numbers = converters.numbers,

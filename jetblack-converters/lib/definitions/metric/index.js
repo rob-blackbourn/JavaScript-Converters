@@ -1,7 +1,9 @@
 ﻿var Converter = require('../../converter');
 var Transformer = require('../../transformer');
-var numbers = require('../../numbers');
-var Real = numbers.Real;
+
+var numbers = require('../../numbers'),
+    Fraction = numbers.Fraction,
+    Real = numbers.Real;
 
 function createSiConverters(repository, targetConverter) {
 

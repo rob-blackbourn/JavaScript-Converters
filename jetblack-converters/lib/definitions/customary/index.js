@@ -1,6 +1,6 @@
-﻿var length = require('./length');
-var mass = require('./mass');
-var volume = require('./volume');
+﻿var length = require('./length'),
+    mass = require('./mass'),
+    volume = require('./volume');
 
 module.exports = function (repository) {
 

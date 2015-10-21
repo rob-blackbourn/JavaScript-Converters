@@ -59,7 +59,7 @@
     <Compile Include="lib\definitions\utensils\UK.js" />
     <Compile Include="lib\definitions\utensils\USA.js" />
     <Compile Include="lib\index.js" />
-    <Compile Include="lib\numbers.js" />
+    <Compile Include="lib\numbers\index.js" />
     <Compile Include="lib\repository.js" />
     <Compile Include="lib\transformer.js" />
     <Compile Include="test\converter-test.js">
@@ -84,6 +84,7 @@
     <Folder Include="lib\definitions\metric\" />
     <Folder Include="lib\definitions\utensils\" />
     <Folder Include="lib\definitions\temperature\" />
+    <Folder Include="lib\numbers\" />
     <Folder Include="test\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->

@@ -1,6 +1,6 @@
 ﻿var assert = require('assert');
 
-var numbers = require('../lib/numbers.js'),
+var numbers = require('../lib/numbers'),
     Fraction = numbers.Fraction,
     Real = numbers.Real;
 

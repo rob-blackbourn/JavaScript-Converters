@@ -1,9 +1,9 @@
-﻿var metric = require('./metric');
-var imperial = require('./imperial');
-var customary = require('./customary');
-var temperature = require('./temperature');
-var utensils = require('./utensils');
-var food = require('./food');
+﻿var metric = require('./metric'),
+    imperial = require('./imperial'),
+    customary = require('./customary'),
+    temperature = require('./temperature'),
+    utensils = require('./utensils'),
+    food = require('./food');
 
 module.exports = function (repository) {
     metric(repository);

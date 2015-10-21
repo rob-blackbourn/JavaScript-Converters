@@ -1,7 +1,8 @@
 ﻿var Converter = require('../../converter');
-var numbers = require('../../numbers');
-var Fraction = numbers.Fraction;
-var Real = numbers.Real;
+
+var numbers = require('../../numbers'),
+    Fraction = numbers.Fraction,
+    Real = numbers.Real;
 
 module.exports = function (repository) {
 
