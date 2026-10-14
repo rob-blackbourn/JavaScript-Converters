@@ -25,24 +25,36 @@ class Real {
     isFloat(): boolean { return typeof this.value === 'number'; }
     valueOf(): number { return this.value.valueOf(); }
 
-    private compare(other: RealOperand): number {
-        const rhs = other instanceof Real ? other.value : other;
+    static toRealOperand(value: RealInput): RealOperand {
+        return value instanceof Real
+            ? value
+            : (
+                value instanceof Fraction
+                    ? value
+                    : (
+                        typeof value === 'number'
+                            ? value
+                            : new Real(value)));
+    }
+
+    private compare(other: RealInput): number {
+        const rhs = Real.toRealOperand(other);
         return this.value instanceof Fraction && rhs instanceof Fraction
             ? this.value.cmp(rhs) : this.valueOf() - rhs.valueOf();
     }
-    eq(other: RealOperand): boolean {
-        const rhs = other instanceof Real ? other.value : other;
+    eq(other: RealInput): boolean {
+        const rhs = Real.toRealOperand(other);
         return this.value instanceof Fraction && rhs instanceof Fraction
             ? this.value.eq(rhs) : this.valueOf() === rhs.valueOf();
     }
-    ne(other: RealOperand): boolean { return !this.eq(other); }
-    lt(other: RealOperand): boolean { return this.compare(other) < 0; }
-    le(other: RealOperand): boolean { return this.compare(other) <= 0; }
-    gt(other: RealOperand): boolean { return this.compare(other) > 0; }
-    ge(other: RealOperand): boolean { return this.compare(other) >= 0; }
+    ne(other: RealInput): boolean { return !this.eq(other); }
+    lt(other: RealInput): boolean { return this.compare(other) < 0; }
+    le(other: RealInput): boolean { return this.compare(other) <= 0; }
+    gt(other: RealInput): boolean { return this.compare(other) > 0; }
+    ge(other: RealInput): boolean { return this.compare(other) >= 0; }
 
-    private calculate(other: RealOperand, operation: 'add' | 'sub' | 'mul' | 'div'): Real {
-        const rhs = other instanceof Real ? other.value : other;
+    private calculate(other: RealInput, operation: 'add' | 'sub' | 'mul' | 'div'): Real {
+        const rhs = Real.toRealOperand(other);
         if (this.value instanceof Fraction && rhs instanceof Fraction) {
             return new Real(this.value[operation](rhs));
         }
@@ -55,10 +67,11 @@ class Real {
             case 'div': return new Real(lhs / value);
         }
     }
-    add(other: RealOperand): Real { return this.calculate(other, 'add'); }
-    sub(other: RealOperand): Real { return this.calculate(other, 'sub'); }
-    mul(other: RealOperand): Real { return this.calculate(other, 'mul'); }
-    div(other: RealOperand): Real { return this.calculate(other, 'div'); }
+
+    add(other: RealInput): Real { return this.calculate(Real.toRealOperand(other), 'add'); }
+    sub(other: RealInput): Real { return this.calculate(Real.toRealOperand(other), 'sub'); }
+    mul(other: RealInput): Real { return this.calculate(Real.toRealOperand(other), 'mul'); }
+    div(other: RealInput): Real { return this.calculate(Real.toRealOperand(other), 'div'); }
 }
 
 export default Real;
