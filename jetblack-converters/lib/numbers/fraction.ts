@@ -10,7 +10,7 @@
  * 
  * @property {number} numerator The numerator of the fraction.
  */
-class Fraction {
+export class Fraction {
     private _numerator: number;
     private _denominator: number;
     constructor(numerator: number = Number.NaN, denominator: number = Number.NaN) {
@@ -197,5 +197,3 @@ class Fraction {
         return best;
     }
 }
-
-export default Fraction;

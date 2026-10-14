@@ -1,9 +1,9 @@
-import Fraction from './fraction';
+import { Fraction } from './fraction';
 
 export type RealInput = number | string | Fraction | Real;
 export type RealOperand = number | Fraction | Real;
 
-class Real {
+export class Real {
     value: number | Fraction;
 
     constructor(value: RealInput) {
@@ -73,5 +73,3 @@ class Real {
     mul(other: RealInput): Real { return this.calculate(Real.toRealOperand(other), 'mul'); }
     div(other: RealInput): Real { return this.calculate(Real.toRealOperand(other), 'div'); }
 }
-
-export default Real;
