@@ -1,13 +1,39 @@
 {
   "name": "jetblack-converters",
   "version": "0.0.0",
-  "description": "jetblack-converters",
-  "main": "app.js",
+  "description": "Unit conversion with exact fraction arithmetic for Node.js and modern browsers",
+  "main": "./dist/index.cjs",
   "author": {
     "name": "rblackbourn",
     "email": "rob.blackbourn@googlemail.com"
   },
   "devDependencies": {
-    "mocha": "^2.3.3"
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.20.5",
+    "esbuild": "^0.25.12",
+    "jest": "^30.5.2",
+    "ts-jest": "^29.4.14",
+    "typescript": "^5.9.3"
+  },
+  "module": "./dist/index.mjs",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && esbuild lib/index.ts --bundle --platform=neutral --target=es2020 --format=esm --outfile=dist/index.mjs --sourcemap && esbuild lib/index.ts --bundle --platform=node --target=es2020 --format=cjs --outfile=dist/index.cjs --sourcemap",
+    "typecheck": "tsc --noEmit",
+    "test": "jest --runInBand",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
