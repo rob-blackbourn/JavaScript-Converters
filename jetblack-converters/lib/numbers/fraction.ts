@@ -1,5 +1,3 @@
-
-
 /**
  * Creates an instance of a Fraction.
  * 

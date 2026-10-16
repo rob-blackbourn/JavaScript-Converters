@@ -31,7 +31,7 @@ describe('numbers', function () {
         }
     });
 
-    it('should normalise negatives', function () {
+    it('should normalize negatives', function () {
         var f1 = new Fraction(-1, -2);
         expect(f1.numerator).toBe(1);
         expect(f1.denominator).toBe(2);
