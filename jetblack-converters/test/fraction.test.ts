@@ -1,6 +1,4 @@
-
-
-import { Fraction, Real } from '../lib/numbers';
+import { Fraction } from '../lib/numbers';
 
 describe('numbers', function () {
 
