@@ -1,72 +1,62 @@
-import type { ConverterRepository } from '../../index';
-import { Fraction, Real, UnitConverter } from '../../index';
+import type { ConverterRepository } from '../../index'
+import { Fraction, Real, UnitConverter } from '../../index'
 
-export default function (repository: ConverterRepository, system: string, authority: string) {
+export default function (
+  repository: ConverterRepository,
+  system: string,
+  authority: string
+) {
+  const domain = 'volume'
 
-    var domain = "volume";
+  const litreConverter = repository.find({ name: 'litre' })
+  const litreScalar = new Real(new Fraction(56826125, 100000000))
+  const pintConverter = repository.add(
+    new UnitConverter(
+      domain,
+      system,
+      authority,
+      'pt',
+      'pint',
+      litreConverter,
+      pint => pint.mul(litreScalar),
+      litre => litre.div(litreScalar)
+    )
+  )
 
-    var litreConverter = repository.find({ name: 'litre' });
-    var litreScalar = new Real(new Fraction(56826125, 100000000));
-    var pintConverter = repository.add(new UnitConverter(domain, system, authority, "pt", "pint", litreConverter,
-        function (pint) {
-            return pint.mul(litreScalar);
-        }, function (litre) {
-            return litre.div(litreScalar);
-        }));
+  const units = [
+    { name: 'minim', symbol: 'min', scalar: new Real(new Fraction(1, 9600)) },
+    {
+      name: 'fluid scruple',
+      symbol: 'fl scruple',
+      scalar: new Real(new Fraction(1, 480))
+    },
+    {
+      name: 'fluid drachm',
+      symbol: 'fl dr',
+      scalar: new Real(new Fraction(1, 160))
+    },
+    {
+      name: 'fluid ounce',
+      symbol: 'fl oz',
+      scalar: new Real(new Fraction(1, 20))
+    },
+    { name: 'gill', symbol: 'gl', scalar: new Real(new Fraction(1, 4)) },
+    { name: 'quart', symbol: 'qt', scalar: new Real(2) },
+    { name: 'gallon', symbol: 'gal', scalar: new Real(8) }
+  ]
 
-    var minimScalar = new Real(9600);
-    repository.add(new UnitConverter(domain, system, authority, "min", "minim", pintConverter,
-        function (pint) {
-            return pint.div(minimScalar);
-        }, function (minim) {
-            return minim.mul(minimScalar);
-        }));
-
-    var fluidScrupleScalar = new Real(480);
-    repository.add(new UnitConverter(domain, system, authority, "fl scruple", "fluid scruple", pintConverter,
-        function (pint) {
-            return pint.div(fluidScrupleScalar);
-        }, function (fluidScruple) {
-            return fluidScruple.mul(fluidScrupleScalar);
-        }));
-
-    var fluidDrachmScalar = new Real(160);
-    repository.add(new UnitConverter(domain, system, authority, "fl dr", "fluid drachm", pintConverter,
-        function (pint) {
-            return pint.div(fluidDrachmScalar);
-        }, function (fluidDrachm) {
-            return fluidDrachm.mul(fluidDrachmScalar);
-        }));
-
-    var fluidOunceScalar = new Real(20);
-    repository.add(new UnitConverter(domain, system, authority, "fl oz", "fluid ounce", pintConverter,
-        function (pint) {
-            return pint.div(fluidOunceScalar);
-        }, function (fluidOunce) {
-            return fluidOunce.mul(fluidOunceScalar);
-        }));
-
-    var gillScalar = new Real(4);
-    repository.add(new UnitConverter(domain, system, authority, "gl", "gill", pintConverter,
-        function (pint) {
-            return pint.div(gillScalar);
-        }, function (gill) {
-            return gill.mul(gillScalar);
-        }));
-
-    var quartScalar = new Real(2);
-    repository.add(new UnitConverter(domain, system, authority, "qt", "quart", pintConverter,
-        function (pint) {
-            return pint.mul(quartScalar);
-        }, function (quart) {
-            return quart.div(quartScalar);
-        }));
-
-    var gallonScalar = new Real(8);
-    repository.add(new UnitConverter(domain, system, authority, "gal", "gallon", pintConverter,
-        function (pint) {
-            return pint.mul(gallonScalar);
-        }, function (gallon) {
-            return gallon.div(gallonScalar);
-        }));
-};
+  for (const { name, symbol, scalar } of units) {
+    repository.add(
+      new UnitConverter(
+        domain,
+        system,
+        authority,
+        symbol,
+        name,
+        pintConverter,
+        value => value.mul(scalar),
+        value => value.div(scalar)
+      )
+    )
+  }
+}

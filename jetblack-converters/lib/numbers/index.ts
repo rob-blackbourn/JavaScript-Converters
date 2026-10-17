@@ -1,2 +1,2 @@
-export { Real } from './real';
-export { Fraction } from './fraction';
+export { Real } from './real'
+export { Fraction } from './fraction'

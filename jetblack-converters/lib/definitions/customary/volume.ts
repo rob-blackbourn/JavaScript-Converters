@@ -48,8 +48,8 @@ export default function (
         symbol,
         name,
         pintConverter,
-        pint => pint.mul(scalar),
-        gallon => gallon.div(scalar)
+        value => value.mul(scalar),
+        value => value.div(scalar)
       )
     )
   }

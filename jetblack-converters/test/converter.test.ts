@@ -1,156 +1,164 @@
-import { REPOSITORY, Fraction, Real } from '../lib';
-
+import { REPOSITORY, Fraction, Real } from '../lib'
 
 describe('converter', function () {
+  it('Should convert meters to meters.', function () {
+    const meterConverter = REPOSITORY.find({ name: 'meter' })!
 
-    it('Should convert meters to meters.', function () {
+    const result = meterConverter.convert(1, meterConverter)
 
-        var meterConverter = REPOSITORY.find({ name: 'meter' })!;
+    expect(result.valueOf()).toBe(1)
+  })
 
-        var result = meterConverter.convert(1, meterConverter);
+  it('Should convert centimeters to millimeters.', function () {
+    const centimeterConverter = REPOSITORY.find({ name: 'centimeter' })!
+    const millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!
 
-        expect(result.valueOf()).toBe(1);
-    });
+    const millimeters = centimeterConverter.convert(10, millimeterConverter)
+    expect(millimeters.valueOf()).toBe(100)
 
-    it('Should convert centimeters to millimeters.', function () {
+    const centimeters = millimeterConverter.convert(100, centimeterConverter)
+    expect(centimeters.valueOf()).toBe(10)
+  })
 
-        var centimeterConverter = REPOSITORY.find({ name: 'centimeter' })!;
-        var millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!;
+  it('Should convert inches to millimeters.', function () {
+    const millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!
+    const inchConverter = REPOSITORY.find({ system: 'imperial', name: 'inch' })!
 
-        var millimeters = centimeterConverter.convert(10, millimeterConverter);
-        expect(millimeters.valueOf()).toBe(100);
+    const millimeters = inchConverter.convert(1, millimeterConverter)
 
-        var centimeters = millimeterConverter.convert(100, centimeterConverter);
-        expect(centimeters.valueOf()).toBe(10);
-    });
+    expect(millimeters.valueOf()).toBe(25.4)
+  })
 
-    it('Should convert inches to millimeters.', function () {
+  it('Should convert millimeters to inches.', function () {
+    const millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!
+    const inchConverter = REPOSITORY.find({ system: 'imperial', name: 'inch' })!
 
-        var millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!;
-        var inchConverter = REPOSITORY.find({ system: 'imperial', name: 'inch' })!;
+    const inches = millimeterConverter.convert(25.4, inchConverter)
+    expect(Math.abs(inches.valueOf() - 1) <= Number.EPSILON).toBeTruthy()
+  })
 
-        var millimeters = inchConverter.convert(1, millimeterConverter);
+  it('Should convert fahrenheit to celsius.', function () {
+    const fahrenheitConverter = REPOSITORY.find({ name: 'Fahrenheit' })!
+    const celsiusConverter = REPOSITORY.find({ name: 'Celsius' })!
 
-        expect(millimeters.valueOf()).toBe(25.4);
-    });
+    let fahrenheit = celsiusConverter.convert(0, fahrenheitConverter)
+    expect(fahrenheit.valueOf()).toBe(32)
 
-    it('Should convert millimeters to inches.', function () {
+    fahrenheit = celsiusConverter.convert(100, fahrenheitConverter)
+    expect(fahrenheit.valueOf()).toBe(212)
 
-        var millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!;
-        var inchConverter = REPOSITORY.find({ system: 'imperial', name: 'inch' })!;
+    let celsius = fahrenheitConverter.convert(32, celsiusConverter)
+    expect(celsius.valueOf()).toBe(0)
 
-        var inches = millimeterConverter.convert(25.4, inchConverter);
-        expect(Math.abs(inches.valueOf() - 1) <= Number.EPSILON).toBeTruthy();
-    });
+    celsius = fahrenheitConverter.convert(212, celsiusConverter)
+    expect(celsius.valueOf()).toBe(100)
 
-    it('Should convert fahrenheit to celsius.', function () {
+    celsius = fahrenheitConverter.convert(-40, celsiusConverter)
+    expect(celsius.valueOf()).toBe(-40)
 
-        var fahrenheitConverter = REPOSITORY.find({ name: 'Fahrenheit' })!;
-        var celsiusConverter = REPOSITORY.find({ name: 'Celsius' })!;
+    fahrenheit = celsiusConverter.convert(-40, fahrenheitConverter)
+    expect(fahrenheit.valueOf()).toBe(-40)
+  })
 
-        var fahrenheit = celsiusConverter.convert(0, fahrenheitConverter);
-        expect(fahrenheit.valueOf()).toBe(32);
+  it('Should convert gas mark to celsius.', function () {
+    const gasMarkConverter = REPOSITORY.find({ name: 'Gas Mark' })!
+    const celsiusConverter = REPOSITORY.find({ name: 'Celsius' })!
 
-        fahrenheit = celsiusConverter.convert(100, fahrenheitConverter);
-        expect(fahrenheit.valueOf()).toBe(212);
+    let gasMark = celsiusConverter.convert(135, gasMarkConverter)
+    expect(gasMark.valueOf()).toBe(1)
 
-        var celsius = fahrenheitConverter.convert(32, celsiusConverter);
-        expect(celsius.valueOf()).toBe(0);
+    gasMark = celsiusConverter.convert(247, gasMarkConverter)
+    expect(gasMark.valueOf()).toBe(9)
 
-        celsius = fahrenheitConverter.convert(212, celsiusConverter);
-        expect(celsius.valueOf()).toBe(100);
+    let celsius = gasMarkConverter.convert(1, celsiusConverter)
+    expect(celsius.valueOf()).toBe(135)
 
-        celsius = fahrenheitConverter.convert(-40, celsiusConverter);
-        expect(celsius.valueOf()).toBe(-40);
+    celsius = gasMarkConverter.convert(9, celsiusConverter)
+    expect(celsius.valueOf()).toBe(247)
 
-        fahrenheit = celsiusConverter.convert(-40, fahrenheitConverter);
-        expect(fahrenheit.valueOf()).toBe(-40);
-    });
+    celsius = gasMarkConverter.convert(new Fraction(1, 4), celsiusConverter)
+    expect(celsius.valueOf()).toBe(107)
 
-    it('Should convert gas mark to celsius.', function () {
+    celsius = gasMarkConverter.convert(new Fraction(1, 2), celsiusConverter)
+    expect(celsius.valueOf()).toBe(121)
 
-        var gasMarkConverter = REPOSITORY.find({ name: 'Gas Mark' })!;
-        var celsiusConverter = REPOSITORY.find({ name: 'Celsius' })!;
+    gasMark = celsiusConverter.convert(107, gasMarkConverter)
+    expect(gasMark.eq(new Real(new Fraction(1, 4)))).toBeTruthy()
 
-        var gasMark = celsiusConverter.convert(135, gasMarkConverter);
-        expect(gasMark.valueOf()).toBe(1);
+    gasMark = celsiusConverter.convert(121, gasMarkConverter)
+    expect(gasMark.eq(new Real(new Fraction(1, 2)))).toBeTruthy()
+  })
 
-        gasMark = celsiusConverter.convert(247, gasMarkConverter);
-        expect(gasMark.valueOf()).toBe(9);
+  it('Should convert gas mark to fahrenheit.', function () {
+    const gasMarkConverter = REPOSITORY.find({ name: 'Gas Mark' })!
+    const fahrenheitConverter = REPOSITORY.find({ name: 'Fahrenheit' })!
 
-        var celsius = gasMarkConverter.convert(1, celsiusConverter);
-        expect(celsius.valueOf()).toBe(135);
+    let gasMark, fahrenheit
 
-        celsius = gasMarkConverter.convert(9, celsiusConverter);
-        expect(celsius.valueOf()).toBe(247);
+    gasMark = fahrenheitConverter.convert(275, gasMarkConverter)
+    expect(gasMark.valueOf()).toBe(1)
 
-        celsius = gasMarkConverter.convert(new Fraction(1, 4), celsiusConverter);
-        expect(celsius.valueOf()).toBe(107);
+    gasMark = fahrenheitConverter.convert(475, gasMarkConverter)
+    expect(gasMark.valueOf()).toBe(9)
 
-        celsius = gasMarkConverter.convert(new Fraction(1, 2), celsiusConverter);
-        expect(celsius.valueOf()).toBe(121);
+    fahrenheit = gasMarkConverter.convert(1, fahrenheitConverter)
+    expect(fahrenheit.valueOf()).toBe(275)
 
-        gasMark = celsiusConverter.convert(107, gasMarkConverter);
-        expect(gasMark.eq(new Real(new Fraction(1, 4)))).toBeTruthy();
+    fahrenheit = gasMarkConverter.convert(9, fahrenheitConverter)
+    expect(fahrenheit.valueOf()).toBe(476.6)
 
-        gasMark = celsiusConverter.convert(121, gasMarkConverter);
-        expect(gasMark.eq(new Real(new Fraction(1, 2)))).toBeTruthy();
-    });
+    fahrenheit = gasMarkConverter.convert(
+      new Fraction(1, 4),
+      fahrenheitConverter
+    )
+    expect(fahrenheit.valueOf()).toBe(224.6)
 
-    it('Should convert gas mark to fahrenheit.', function () {
+    fahrenheit = gasMarkConverter.convert(
+      new Fraction(1, 2),
+      fahrenheitConverter
+    )
+    expect(fahrenheit.valueOf()).toBe(249.8)
 
-        var gasMarkConverter = REPOSITORY.find({ name: 'Gas Mark' })!;
-        var fahrenheitConverter = REPOSITORY.find({ name: 'Fahrenheit' })!;
+    gasMark = fahrenheitConverter.convert(225, gasMarkConverter)
+    expect(gasMark.eq(new Real(new Fraction(1, 4)))).toBeTruthy()
 
-        var gasMark, fahrenheit;
+    gasMark = fahrenheitConverter.convert(250, gasMarkConverter)
+    expect(gasMark.eq(new Real(new Fraction(1, 2)))).toBeTruthy()
+  })
 
-        gasMark = fahrenheitConverter.convert(275, gasMarkConverter);
-        expect(gasMark.valueOf()).toBe(1);
+  it('Should convert UK cups to millilitres', function () {
+    const cupConverter = REPOSITORY.find({ authority: 'UK', name: 'cup' })!
+    const millilitreConverter = REPOSITORY.find({ name: 'millilitre' })!
 
-        gasMark = fahrenheitConverter.convert(475, gasMarkConverter);
-        expect(gasMark.valueOf()).toBe(9);
+    const millilitres = cupConverter.convert(1, millilitreConverter)
+    expect(Math.round(millilitres.valueOf() * 10) / 10).toBe(284.1)
+  })
 
-        fahrenheit = gasMarkConverter.convert(1, fahrenheitConverter);
-        expect(fahrenheit.valueOf()).toBe(275);
+  it('Should convert US Cups to grammes', function () {
+    const cupConverter = REPOSITORY.find({ name: 'cup', authority: 'US' })!
+    const grammeConverter = REPOSITORY.find({
+      name: 'gramme',
+      authority: 'si'
+    })!
+    const density = new Real(Fraction.fromFloat(0.875))
 
-        fahrenheit = gasMarkConverter.convert(9, fahrenheitConverter);
-        expect(fahrenheit.valueOf()).toBe(476.6);
+    const cups = REPOSITORY.convert(
+      cupConverter,
+      1000,
+      grammeConverter,
+      density
+    )
+    expect(cups).toBeDefined()
+    expect(cups?.asFraction().roundTo([1, 2, 3, 4, 5, 6, 8])?.toString()).toBe(
+      '4 1/4'
+    )
 
-        fahrenheit = gasMarkConverter.convert(new Fraction(1, 4), fahrenheitConverter);
-        expect(fahrenheit.valueOf()).toBe(224.6);
-
-        fahrenheit = gasMarkConverter.convert(new Fraction(1, 2), fahrenheitConverter);
-        expect(fahrenheit.valueOf()).toBe(249.8);
-
-        gasMark = fahrenheitConverter.convert(225, gasMarkConverter);
-        expect(gasMark.eq(new Real(new Fraction(1, 4)))).toBeTruthy();
-
-        gasMark = fahrenheitConverter.convert(250, gasMarkConverter);
-        expect(gasMark.eq(new Real(new Fraction(1, 2)))).toBeTruthy();
-    });
-
-    it('Should convert UK cups to millilitres', function () {
-
-        var cupConverter = REPOSITORY.find({ authority: 'UK', name: 'cup' })!;
-        var millilitreConverter = REPOSITORY.find({ name: 'millilitre' })!;
-
-
-
-        var millilitres = cupConverter.convert(1, millilitreConverter);
-        expect(Math.round(millilitres.valueOf() * 10) / 10).toBe(284.1);
-    });
-
-    it('Should convert US Cups to grammes', function () {
-
-        const cupConverter = REPOSITORY.find({ name: 'cup', authority: 'US' })!;
-        const grammeConverter = REPOSITORY.find({ name: 'gramme', authority: 'si' })!;
-        const density = new Real(Fraction.fromFloat(0.875));
-
-        const cups = REPOSITORY.convert(cupConverter, 1000, grammeConverter, density);
-        expect(cups).toBeDefined();
-        expect(cups?.asFraction().roundTo([1, 2, 3, 4, 5, 6, 8])?.toString()).toBe("4 1/4");
-
-        const grammes = REPOSITORY.convert(grammeConverter, cups!, cupConverter, density);
-        expect(grammes?.valueOf()).toBe(1000);
-    });
+    const grammes = REPOSITORY.convert(
+      grammeConverter,
+      cups!,
+      cupConverter,
+      density
+    )
+    expect(grammes?.valueOf()).toBe(1000)
+  })
 })

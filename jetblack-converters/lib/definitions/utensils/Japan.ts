@@ -1,23 +1,32 @@
-import type { ConverterRepository } from '../../index';
-import { Fraction, Real, UnitConverter } from '../../index';
+import type { ConverterRepository } from '../../index'
+import { Fraction, Real, UnitConverter } from '../../index'
 
-export default function (repository: ConverterRepository) {
+export default function (
+  repository: ConverterRepository,
+  domain: string,
+  system: string
+) {
+  const authority = 'JP'
 
-    var litreConverter = repository.find({ name: 'litre' });
+  const litreConverter = repository.find({ name: 'litre' })
 
-    var goScalar = new Real(new Fraction(2401, 133100));
-    repository.add(new UnitConverter("volume", "utensils", "JPN", "go", "go", litreConverter,
-        function (value) {
-            return value.mul(goScalar);
-        }, function (value) {
-            return value.div(goScalar);
-        }));
+  const units = [
+    { name: 'go', symbol: 'go', scalar: new Real(new Fraction(2401, 133100)) },
+    { name: 'cup', symbol: 'cup', scalar: new Real(new Fraction(200, 1000)) }
+  ]
 
-    var cupScalar = new Real(new Fraction(200, 1000));
-    repository.add(new UnitConverter("volume", "utensils", "JPN", "cup", "cup", litreConverter,
-        function (value) {
-            return value.mul(cupScalar);
-        }, function (value) {
-            return value.div(cupScalar);
-        }));
-};
+  for (const { name, symbol, scalar } of units) {
+    repository.add(
+      new UnitConverter(
+        domain,
+        system,
+        authority,
+        symbol,
+        name,
+        litreConverter,
+        value => value.mul(scalar),
+        value => value.div(scalar)
+      )
+    )
+  }
+}
