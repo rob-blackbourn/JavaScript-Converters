@@ -70,7 +70,7 @@ class UnitConverter {
             return value;
         }
 
-        var converters = UnitConverter.prepareConverters(this, to);
+        const converters = UnitConverter.prepareConverters(this, to);
         if (!converters) throw new Error("No conversion path between units");
 
         for (let converter of converters.from) {
@@ -90,15 +90,15 @@ class UnitConverter {
 
     static prepareConverters(fromConverter: UnitConverter | null | undefined, toConverter: UnitConverter | null | undefined): { from: UnitConverter[]; to: UnitConverter[] } | null {
 
-        var fromConverters: UnitConverter[] = [];
+        let fromConverters: UnitConverter[] = [];
         while (fromConverter) {
             fromConverters.push(fromConverter);
             fromConverter = fromConverter.targetConverter;
         }
 
-        var toConverters: UnitConverter[] = [];
+        let toConverters: UnitConverter[] = [];
         while (toConverter) {
-            var index = fromConverters.indexOf(toConverter);
+            const index = fromConverters.indexOf(toConverter);
             if (index != -1) {
                 return { from: fromConverters.slice(0, index), to: toConverters };
             }

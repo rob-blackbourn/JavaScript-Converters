@@ -24,17 +24,10 @@ export class Real {
     toString(): string { return this.value.toString(); }
     isFloat(): boolean { return typeof this.value === 'number'; }
     valueOf(): number { return this.value.valueOf(); }
-
-    static toRealOperand(value: RealInput): RealOperand {
-        return value instanceof Real
-            ? value
-            : (
-                value instanceof Fraction
-                    ? value
-                    : (
-                        typeof value === 'number'
-                            ? value
-                            : new Real(value)));
+    asFraction(tolerance?: number): Fraction {
+        return this.value instanceof Fraction
+            ? this.value
+            : Fraction.fromFloat(this.value, tolerance);
     }
 
     static toReal(value: RealInput): Real {

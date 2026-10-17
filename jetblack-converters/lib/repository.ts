@@ -22,8 +22,7 @@ export class DomainConverterRepository {
     }
 
     find(sourceDomain: string, targetDomain: string): DomainConverter | undefined {
-        for (var index = 0; index < this._domainConverters.length; ++index) {
-            var domainConverter = this._domainConverters[index];
+        for (const domainConverter of this._domainConverters) {
             if ((sourceDomain == domainConverter.sourceConverter.domain && targetDomain == domainConverter.targetConverter.domain)
                 || (sourceDomain == domainConverter.targetConverter.domain && targetDomain == domainConverter.sourceConverter.domain)) {
                 return domainConverter;
@@ -106,7 +105,7 @@ export class ConverterRepository {
         if (converter.domain == targetConverter.domain) {
             return converter.convert(value, targetConverter);
         } else {
-            var domainConverter = this._domainConverters.find(converter.domain, targetConverter.domain);
+            const domainConverter = this._domainConverters.find(converter.domain, targetConverter.domain);
             if (domainConverter) {
                 return domainConverter.convert(value, converter, targetConverter, scalar);
             }
@@ -115,10 +114,10 @@ export class ConverterRepository {
 
     static filter(candidates: UnitConverter[], criterium: string | undefined, getter: (converter: UnitConverter) => string) {
         if (criterium) {
-            var possibles = [];
-            for (var i = 0; i < candidates.length; ++i) {
-                if (getter(candidates[i]) == criterium) {
-                    possibles.push(candidates[i]);
+            const possibles = [];
+            for (const candidate of candidates) {
+                if (getter(candidate) == criterium) {
+                    possibles.push(candidate);
                 }
             }
             return possibles;
