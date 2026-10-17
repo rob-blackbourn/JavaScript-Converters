@@ -1,72 +1,51 @@
-import type { ConverterRepository } from '../../index';
-import { Fraction, Real, UnitConverter } from '../../index';
+import type { ConverterRepository } from '../../index'
+import { Fraction, Real, UnitConverter } from '../../index'
 
-export default function (repository: ConverterRepository, system: string, authority: string) {
+export default function (
+  repository: ConverterRepository,
+  system: string,
+  authority: string
+) {
+  const domain = 'length'
 
-    var domain = "length";
+  const meterConverter = repository.find({ name: 'meter' })
 
-    var meterConverter = repository.find({ name: 'meter' });
-    var meterScalar = new Real(new Fraction(3048, 10000));
-    var feetConverter = repository.add(new UnitConverter(domain, system, authority, "ft", "feet", meterConverter,
-        function (value) {
-            return value.mul(meterScalar);
-        }, function (value) {
-            return value.div(meterScalar);
-        }));
+  const meterScalar = new Real(new Fraction(3048, 10000))
+  const feetConverter = repository.add(
+    new UnitConverter(
+      domain,
+      system,
+      authority,
+      'ft',
+      'feet',
+      meterConverter,
+      value => value.mul(meterScalar),
+      value => value.div(meterScalar)
+    )
+  )
 
-    var thouScalar = new Real(12000);
-    repository.add(new UnitConverter(domain, system, authority, "th", "thou", feetConverter,
-        function (value) {
-            return value.div(thouScalar);
-        }, function (value) {
-            return value.mul(thouScalar);
-        }));
+  const units = [
+    { name: 'thou', symbol: 'th', scalar: new Real(new Fraction(1, 12000)) },
+    { name: 'inch', symbol: 'in', scalar: new Real(new Fraction(1, 12)) },
+    { name: 'yard', symbol: 'yd', scalar: new Real(3) },
+    { name: 'chain', symbol: 'ch', scalar: new Real(66) },
+    { name: 'furlong', symbol: 'fur', scalar: new Real(660) },
+    { name: 'mile', symbol: 'mi', scalar: new Real(5280) },
+    { name: 'league', symbol: 'lea', scalar: new Real(15840) }
+  ]
 
-    var inchScalar = new Real(12);
-    repository.add(new UnitConverter(domain, system, authority, "in", "inch", feetConverter,
-        function (value) {
-            return value.div(inchScalar);
-        }, function (value) {
-            return value.mul(inchScalar);
-        }));
-
-    var yardScalar = new Real(3);
-    repository.add(new UnitConverter(domain, system, authority, "yd", "yard", feetConverter,
-        function (value) {
-            return value.mul(yardScalar);
-        }, function (value) {
-            return value.div(yardScalar);
-        }));
-
-    var chainScalar = new Real(66);
-    repository.add(new UnitConverter(domain, system, authority, "ch", "chain", feetConverter,
-        function (value) {
-            return value.mul(chainScalar);
-        }, function (value) {
-            return value.div(chainScalar);
-        }));
-
-    var furlongScalar = new Real(660);
-    repository.add(new UnitConverter(domain, system, authority, "fur", "furlong", feetConverter,
-        function (value) {
-            return value.mul(furlongScalar);
-        }, function (value) {
-            return value.div(furlongScalar);
-        }));
-
-    var mileScalar = new Real(5280);
-    repository.add(new UnitConverter(domain, system, authority, "mi", "mile", feetConverter,
-        function (value) {
-            return value.mul(mileScalar);
-        }, function (value) {
-            return value.div(mileScalar);
-        }));
-
-    var leagueScalar = new Real(15840);
-    repository.add(new UnitConverter(domain, system, authority, "lea", "league", feetConverter,
-        function (value) {
-            return value.mul(leagueScalar);
-        }, function (value) {
-            return value.div(leagueScalar);
-        }));
-};
+  for (const { name, symbol, scalar } of units) {
+    repository.add(
+      new UnitConverter(
+        domain,
+        system,
+        authority,
+        symbol,
+        name,
+        feetConverter,
+        value => value.mul(scalar),
+        value => value.div(scalar)
+      )
+    )
+  }
+}
