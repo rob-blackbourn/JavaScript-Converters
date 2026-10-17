@@ -1,44 +1,38 @@
-import type { ConverterRepository } from '../../../../index';
-import { Real, UnitConverter } from '../../../../index';
+import type { ConverterRepository } from '../../../../index'
+import { Real, UnitConverter } from '../../../../index'
 
-export default function (repository: ConverterRepository) {
+export default function (
+  repository: ConverterRepository,
+  domain: string,
+  system: string
+) {
+  const authority = 'EU'
 
-    const domain = 'mass';
-    const system = "foo/chicken/eggs"
-    const authority = 'EU';
+  const grammeConverter = repository.find({
+    authority: 'si',
+    system: 'metric',
+    name: 'gramme'
+  })
 
-    const grammeConverter = repository.find({ authority: 'si', system: 'metric', name: 'gramme' });
+  const units = [
+    { name: 'very large', symbol: 'XL', scalar: new Real(73) },
+    { name: 'large', symbol: 'L', scalar: new Real(68) },
+    { name: 'medium', symbol: 'M', scalar: new Real(58) },
+    { name: 'small', symbol: 'S', scalar: new Real(53) }
+  ]
 
-    const veryLargeScalar = new Real(73);
-    repository.add(new UnitConverter(domain, system, authority, "XL", "very large", grammeConverter,
-        function (value) {
-            return value.mul(veryLargeScalar);
-        }, function (value) {
-            return value.div(veryLargeScalar);
-        }));
-
-    const largeScalar = new Real(68);
-    repository.add(new UnitConverter(domain, system, authority, "L", "large", grammeConverter,
-        function (value) {
-            return value.mul(largeScalar);
-        }, function (value) {
-            return value.div(largeScalar);
-        }));
-
-    const mediumScalar = new Real(58);
-    repository.add(new UnitConverter(domain, system, authority, "M", "medium", grammeConverter,
-        function (value) {
-            return value.mul(mediumScalar);
-        }, function (value) {
-            return value.div(mediumScalar);
-        }));
-
-    const smallScalar = new Real(53);
-    repository.add(new UnitConverter(domain, system, authority, "S", "small", grammeConverter,
-        function (value) {
-            return value.mul(smallScalar);
-        }, function (value) {
-            return value.div(smallScalar);
-        }));
-
-};
+  for (const { name, symbol, scalar } of units) {
+    repository.add(
+      new UnitConverter(
+        domain,
+        system,
+        authority,
+        symbol,
+        name,
+        grammeConverter,
+        value => value.mul(scalar),
+        value => value.div(scalar)
+      )
+    )
+  }
+}

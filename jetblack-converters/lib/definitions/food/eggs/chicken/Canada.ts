@@ -1,60 +1,40 @@
-import type { ConverterRepository } from '../../../../index';
-import { Real, UnitConverter } from '../../../../index';
+import type { ConverterRepository } from '../../../../index'
+import { Real, UnitConverter } from '../../../../index'
 
-export default function (repository: ConverterRepository) {
+export default function (
+  repository: ConverterRepository,
+  domain: string,
+  system: string
+) {
+  const authority = 'CA'
 
-    const domain = 'mass';
-    const system = "food/chicken/eggs";
-    const authority = "CA";
+  const grammeConverter = repository.find({
+    authority: 'si',
+    system: 'metric',
+    name: 'gramme'
+  })
 
-    const grammeConverter = repository.find({ authority: 'si', system: 'metric', name: 'gramme' });
+  const units = [
+    { name: 'jumbo', symbol: 'jumbo', scalar: new Real(70) },
+    { name: 'very large', symbol: 'XL', scalar: new Real(66) },
+    { name: 'large', symbol: 'L', scalar: new Real(59) },
+    { name: 'medium', symbol: 'M', scalar: new Real(52) },
+    { name: 'small', symbol: 'S', scalar: new Real(45) },
+    { name: 'peewee', symbol: 'peewee', scalar: new Real(41) }
+  ]
 
-    const jumboScalar = new Real(70);
-
-    repository.add(new UnitConverter(domain, system, authority, "jumbo", "jumbo", grammeConverter,
-        function (value) {
-            return value.mul(jumboScalar);
-        }, function (value) {
-            return value.div(jumboScalar);
-        }));
-
-    const veryLargeScalar = new Real(66);
-    repository.add(new UnitConverter(domain, system, authority, "XL", "very large", grammeConverter,
-        function (value) {
-            return value.mul(veryLargeScalar);
-        }, function (value) {
-            return value.div(veryLargeScalar);
-        }));
-
-    const largeScalar = new Real(59);
-    repository.add(new UnitConverter(domain, system, authority, "L", "large", grammeConverter,
-        function (value) {
-            return value.mul(largeScalar);
-        }, function (value) {
-            return value.div(largeScalar);
-        }));
-
-    const mediumScalar = new Real(52);
-    repository.add(new UnitConverter(domain, system, authority, "M", "medium", grammeConverter,
-        function (value) {
-            return value.mul(mediumScalar);
-        }, function (value) {
-            return value.div(mediumScalar);
-        }));
-
-    const smallScalar = new Real(45);
-    repository.add(new UnitConverter(domain, system, authority, "S", "small", grammeConverter,
-        function (value) {
-            return value.mul(smallScalar);
-        }, function (value) {
-            return value.div(smallScalar);
-        }));
-
-    const peeweeScalar = new Real(41);
-    repository.add(new UnitConverter(domain, system, authority, "peewee", "peewee", grammeConverter,
-        function (value) {
-            return value.mul(peeweeScalar);
-        }, function (value) {
-            return value.div(peeweeScalar);
-        }));
-};
+  for (const { name, symbol, scalar } of units) {
+    repository.add(
+      new UnitConverter(
+        domain,
+        system,
+        authority,
+        symbol,
+        name,
+        grammeConverter,
+        value => value.mul(scalar),
+        value => value.div(scalar)
+      )
+    )
+  }
+}
