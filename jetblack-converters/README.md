@@ -7,10 +7,10 @@ kitchen utensil, and food definitions.
 ## Usage
 
 ```ts
-import { repository, Fraction, Real } from 'jetblack-converters';
+import { REPOSITORY, Fraction, Real } from 'jetblack-converters';
 
-const inches = repository.find({ system: 'imperial', name: 'inch' });
-const millimeters = repository.find({ name: 'millimeter' });
+const inches = REPOSITORY.find({ system: 'imperial', name: 'inch' });
+const millimeters = REPOSITORY.find({ name: 'millimeter' });
 if (inches && millimeters) {
   console.log(inches.convert(1, millimeters).valueOf()); // 25.4
 }
@@ -21,7 +21,7 @@ console.log(half.add(half).toString()); // "1"
 
 CommonJS consumers can use `require('jetblack-converters')`. The package exports
 `UnitConverter`, `DomainConverter`, `ConverterRepository`,
-`DomainConverterRepository`, `repository`, `Real`, `Fraction`, and the existing
+`DomainConverterRepository`, `REPOSITORY`, `Real`, `Fraction`, and the existing
 `numbers` namespace. Lookups return `undefined` when no matching unit exists.
 
 The build produces `dist/index.cjs` for CommonJS, `dist/index.mjs` for ES modules,
@@ -31,15 +31,15 @@ can also be imported directly in modern browsers:
 
 ```html
 <script type="module">
-  import { repository } from './dist/index.mjs';
-  const meters = repository.find({ name: 'meter' });
-  const centimeters = repository.find({ name: 'centimeter' });
+  import { REPOSITORY } from './dist/index.mjs';
+  const meters = REPOSITORY.find({ name: 'meter' });
+  const centimeters = REPOSITORY.find({ name: 'centimeter' });
   console.log(meters.convert(1, centimeters).valueOf()); // 100
 </script>
 ```
 
 For mass/volume conversions, supply the scalar (litres per gramme) as the fourth
-argument to `repository.convert(source, value, target, scalar)`. A missing scalar
+argument to `REPOSITORY.convert(source, value, target, scalar)`. A missing scalar
 throws an error. Converting units without a shared conversion path also throws.
 Repository conversions between domains without a registered bridge return
 `undefined`.
