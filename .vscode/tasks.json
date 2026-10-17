@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build package",
+      "type": "npm",
+      "script": "build",
+      "path": "jetblack-converters",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "Typecheck",
+      "type": "npm",
+      "script": "typecheck",
+      "path": "jetblack-converters",
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "Run Jest tests",
+      "type": "npm",
+      "script": "test",
+      "path": "jetblack-converters",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

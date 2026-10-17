@@ -1,0 +1,40 @@
+{
+  "js/ts.tsdk.path": "jetblack-converters/node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "js/ts.preferences.importModuleSpecifier": "relative",
+  "jest.rootPath": "jetblack-converters",
+  "jest.jestCommandLine": "npm test --",
+  "jest.useJest30": true,
+  "search.exclude": {
+    "**/dist": true,
+    "**/coverage": true
+  },
+  "files.watcherExclude": {
+    "**/dist/**": true,
+    "**/coverage/**": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "cSpell.words": [
+    "atto",
+    "centi",
+    "criterium",
+    "deca",
+    "deci",
+    "dstspn",
+    "femto",
+    "giga",
+    "hecto",
+    "milli",
+    "peta",
+    "pico",
+    "tera",
+    "yocto",
+    "yotta",
+    "zepto",
+    "zetta"
+  ]
+}
