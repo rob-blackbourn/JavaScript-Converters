@@ -126,6 +126,16 @@ describe('converter', () => {
     expect(gasMark.eq(new Real(new Fraction(1, 2)))).toBeTruthy()
   })
 
+  it('Should convert US spoons to fluid ounces', () => {
+    const tspConverter = REPOSITORY.find({ authority: 'US', name: 'teaspoon' })!
+    const flozConverter = REPOSITORY.find({
+      authority: 'US',
+      name: 'fluid ounce'
+    })!
+    const floz = tspConverter.convert(1, flozConverter)
+    expect(floz.asFraction().toString()).toBe('1/6')
+  })
+
   it('Should convert UK cups to millilitres', () => {
     const cupConverter = REPOSITORY.find({ authority: 'UK', name: 'cup' })!
     const millilitreConverter = REPOSITORY.find({ name: 'millilitre' })!

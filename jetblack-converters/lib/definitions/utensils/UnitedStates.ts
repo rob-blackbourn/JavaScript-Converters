@@ -14,12 +14,12 @@ export default function (
   })
 
   const units = [
-    { name: 'drop', symbol: 'drop', scalar: new Real(576) },
-    { name: 'teaspoon', symbol: 'tsp', scalar: new Real(6) },
+    { name: 'drop', symbol: 'drop', scalar: new Real(new Fraction(1, 576)) },
+    { name: 'teaspoon', symbol: 'tsp', scalar: new Real(new Fraction(1, 6)) },
     {
       name: 'tablespoon',
       symbol: 'tbsp',
-      scalar: new Real(2)
+      scalar: new Real(new Fraction(1, 2))
     },
     { name: 'cup', symbol: 'cup', scalar: new Real(new Fraction(1, 8)) }
   ]
