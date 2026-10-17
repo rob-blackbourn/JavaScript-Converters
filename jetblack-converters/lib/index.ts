@@ -4,7 +4,7 @@ import * as numbers from './numbers';
 definitions(repository);
 export { repository, numbers };
 export { default as UnitConverter } from './unit-converter';
-export { default as DomainConverter } from './domain-converter';
+export { DomainConverter } from './DomainConverter';
 export { ConverterRepository, DomainConverterRepository } from './repository';
 export { Real, Fraction } from './numbers';
 export type { RealInput, RealOperand } from './numbers/real';

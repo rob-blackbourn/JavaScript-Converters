@@ -1,5 +1,5 @@
 import UnitConverter from './unit-converter';
-import DomainConverter from './domain-converter';
+import { DomainConverter } from './DomainConverter';
 import type { RealInput } from './numbers/real';
 import type { Real } from './numbers';
 export interface ConverterCriteria { domain?: string; system?: string; authority?: string; symbol?: string; name?: string; }

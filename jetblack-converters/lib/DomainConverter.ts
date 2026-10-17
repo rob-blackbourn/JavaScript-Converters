@@ -4,7 +4,7 @@ import type { RealInput } from './numbers/real';
 export type DomainConversion = (value: Real, scalar?: Real) => Real;
 
 
-class DomainConverter {
+export class DomainConverter {
     private _sourceConverter: UnitConverter;
     private _targetConverter: UnitConverter;
     private _convertTo: DomainConversion;
@@ -50,5 +50,3 @@ class DomainConverter {
         return this._sourceConverter.domain + " to " + this._targetConverter.domain;
     }
 }
-
-export default DomainConverter;

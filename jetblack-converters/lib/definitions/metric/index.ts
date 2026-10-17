@@ -1,6 +1,6 @@
 import type { ConverterRepository } from '../../repository';
 import UnitConverter from '../../unit-converter';
-import DomainConverter from '../../domain-converter';
+import { DomainConverter } from '../../DomainConverter';
 
 import { Fraction, Real } from '../../numbers';
 
