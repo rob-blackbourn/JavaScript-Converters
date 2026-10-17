@@ -142,7 +142,7 @@ describe('converter', function () {
 
     it('Should convert US Cups to grammes', function () {
 
-        const cupConverter = REPOSITORY.find({ name: 'cup', authority: 'USA' })!;
+        const cupConverter = REPOSITORY.find({ name: 'cup', authority: 'US' })!;
         const grammeConverter = REPOSITORY.find({ name: 'gramme', authority: 'si' })!;
         const density = new Real(Fraction.fromFloat(0.875));
 

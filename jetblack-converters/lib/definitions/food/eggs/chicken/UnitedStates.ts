@@ -2,51 +2,53 @@ import type { ConverterRepository } from '../../../../index';
 import { Fraction, Real, UnitConverter } from '../../../../index';
 
 export default function (repository: ConverterRepository) {
+    const domain = 'mass'
+    const authority = 'US';
 
-    var ounceConverter = repository.find({ authority: 'USA', system: 'customary', name: 'ounce' });
+    const ounceConverter = repository.find({ authority: authority, system: 'customary', name: 'ounce' });
 
-    var jumboScalar = new Real(new Fraction(5, 2));
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "USA", "jumbo", "jumbo", ounceConverter,
+    const jumboScalar = new Real(new Fraction(5, 2));
+    repository.add(new UnitConverter(domain, "food/chicken/eggs", authority, "jumbo", "jumbo", ounceConverter,
         function (value) {
             return value.mul(jumboScalar);
         }, function (value) {
             return value.div(jumboScalar);
         }));
 
-    var veryLargeScalar = new Real(new Fraction(9, 4));
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "USA", "XL", "very large", ounceConverter,
+    const veryLargeScalar = new Real(new Fraction(9, 4));
+    repository.add(new UnitConverter(domain, "food/chicken/eggs", authority, "XL", "very large", ounceConverter,
         function (value) {
             return value.mul(veryLargeScalar);
         }, function (value) {
             return value.div(veryLargeScalar);
         }));
 
-    var largeScalar = new Real(2);
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "USA", "L", "large", ounceConverter,
+    const largeScalar = new Real(2);
+    repository.add(new UnitConverter(domain, "food/chicken/eggs", authority, "L", "large", ounceConverter,
         function (value) {
             return value.mul(largeScalar);
         }, function (value) {
             return value.div(largeScalar);
         }));
 
-    var mediumScalar = new Real(new Fraction(7, 4));
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "USA", "M", "medium", ounceConverter,
+    const mediumScalar = new Real(new Fraction(7, 4));
+    repository.add(new UnitConverter(domain, "food/chicken/eggs", authority, "M", "medium", ounceConverter,
         function (value) {
             return value.mul(mediumScalar);
         }, function (value) {
             return value.div(mediumScalar);
         }));
 
-    var smallScalar = new Real(new Fraction(3, 2));
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "USA", "S", "small", ounceConverter,
+    const smallScalar = new Real(new Fraction(3, 2));
+    repository.add(new UnitConverter(domain, "food/chicken/eggs", authority, "S", "small", ounceConverter,
         function (value) {
             return value.mul(smallScalar);
         }, function (value) {
             return value.div(smallScalar);
         }));
 
-    var peeweeScalar = new Real(new Fraction(5, 4));
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "USA", "peewee", "peewee", ounceConverter,
+    const peeweeScalar = new Real(new Fraction(5, 4));
+    repository.add(new UnitConverter(domain, "food/chicken/eggs", authority, "peewee", "peewee", ounceConverter,
         function (value) {
             return value.mul(peeweeScalar);
         }, function (value) {

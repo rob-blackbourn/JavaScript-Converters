@@ -6,7 +6,7 @@ import volume from './volume';
 export default function (repository: ConverterRepository) {
 
     var system = "customary";
-    var authority = "USA";
+    var authority = "US";
 
     length(repository, system, authority);
     mass(repository, system, authority);

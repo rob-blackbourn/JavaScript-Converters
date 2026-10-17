@@ -3,8 +3,8 @@ import australia from './Australia';
 import canada from './Canada';
 import fda from './FDA';
 import japan from './Japan';
-import uk from './UK';
-import usa from './USA';
+import uk from './UnitedKingdom';
+import us from './UnitedStates';
 
 export default function (repository: ConverterRepository) {
     australia(repository);
@@ -12,5 +12,5 @@ export default function (repository: ConverterRepository) {
     fda(repository);
     japan(repository);
     uk(repository);
-    usa(repository);
+    us(repository);
 };
