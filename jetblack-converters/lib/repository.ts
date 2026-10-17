@@ -2,10 +2,18 @@ import { UnitConverter } from './UnitConverter';
 import { DomainConverter } from './DomainConverter';
 import type { RealInput } from './numbers/real';
 import type { Real } from './numbers';
-export interface ConverterCriteria { domain?: string; system?: string; authority?: string; symbol?: string; name?: string; }
+
+export interface ConverterCriteria {
+    domain?: string;
+    system?: string;
+    authority?: string;
+    symbol?: string;
+    name?: string;
+}
 
 
 export class DomainConverterRepository {
+
     private _domainConverters: DomainConverter[];
 
     constructor() {
@@ -32,6 +40,7 @@ export class DomainConverterRepository {
 }
 
 export class ConverterRepository {
+
     private _defaultClassification?: string;
     private _defaultAuthority?: string;
     private _converters: UnitConverter[];
@@ -68,19 +77,17 @@ export class ConverterRepository {
     }
 
     find(criteria: ConverterCriteria): UnitConverter | undefined {
-        var possibles = this.findAll(criteria);
-
-        var filtered;
+        let possibles = this.findAll(criteria);
 
         if (possibles.length > 1) {
-            filtered = ConverterRepository.filter(possibles, this._defaultClassification, function (converter) { return converter.system; });
+            const filtered = ConverterRepository.filter(possibles, this._defaultClassification, function (converter) { return converter.system; });
             if (filtered.length > 0) {
                 possibles = filtered;
             }
         }
 
         if (possibles.length > 1) {
-            filtered = ConverterRepository.filter(possibles, this._defaultAuthority, function (converter) { return converter.authority; });
+            const filtered = ConverterRepository.filter(possibles, this._defaultAuthority, function (converter) { return converter.authority; });
             if (filtered.length > 0) {
                 possibles = filtered;
             }
@@ -91,7 +98,7 @@ export class ConverterRepository {
 
     findAll(criteria: ConverterCriteria) {
 
-        var possibles = this._converters;
+        let possibles = this._converters;
         possibles = ConverterRepository.filter(possibles, criteria.domain, function (converter) { return converter.domain; });
         possibles = ConverterRepository.filter(possibles, criteria.system, function (converter) { return converter.system; });
         possibles = ConverterRepository.filter(possibles, criteria.authority, function (converter) { return converter.authority; });
@@ -128,4 +135,4 @@ export class ConverterRepository {
 
 }
 
-export default new ConverterRepository();
+export const REPOSITORY = new ConverterRepository();

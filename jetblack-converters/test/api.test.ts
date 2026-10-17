@@ -1,4 +1,4 @@
-import { repository, UnitConverter, ConverterRepository, Fraction, Real } from '../lib';
+import { REPOSITORY, UnitConverter, ConverterRepository, Fraction, Real } from '../lib';
 
 describe('typed public API', () => {
   it('preserves exact fractions and accepts numeric operands', () => {
@@ -12,7 +12,7 @@ describe('typed public API', () => {
   });
 
   it('returns undefined for missing units and unregistered domain bridges', () => {
-    expect(repository.find({ name: 'unknown' })).toBeUndefined();
+    expect(REPOSITORY.find({ name: 'unknown' })).toBeUndefined();
     const source = new UnitConverter('one', '', '', '', 'source');
     const target = new UnitConverter('two', '', '', '', 'target');
     expect(new ConverterRepository().convert(source, 1, target)).toBeUndefined();
@@ -20,11 +20,11 @@ describe('typed public API', () => {
   });
 
   it('passes a scalar through mass/volume conversions in both directions', () => {
-    const grams = repository.find({ name: 'gramme', authority: 'si' })!;
-    const liters = repository.find({ name: 'litre', authority: 'si' })!;
+    const grams = REPOSITORY.find({ name: 'gramme', authority: 'si' })!;
+    const liters = REPOSITORY.find({ name: 'litre', authority: 'si' })!;
     const scalar = new Real(new Fraction(1, 1000));
-    expect(repository.convert(grams, 1000, liters, scalar)?.valueOf()).toBe(1);
-    expect(repository.convert(liters, 1, grams, scalar)?.valueOf()).toBe(1000);
-    expect(() => repository.convert(grams, 1, liters)).toThrow('scalar');
+    expect(REPOSITORY.convert(grams, 1000, liters, scalar)?.valueOf()).toBe(1);
+    expect(REPOSITORY.convert(liters, 1, grams, scalar)?.valueOf()).toBe(1000);
+    expect(() => REPOSITORY.convert(grams, 1, liters)).toThrow('scalar');
   });
 });

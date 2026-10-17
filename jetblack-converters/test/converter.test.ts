@@ -1,11 +1,11 @@
-import { repository, Fraction, Real } from '../lib';
+import { REPOSITORY, Fraction, Real } from '../lib';
 
 
 describe('converter', function () {
 
     it('Should convert meters to meters.', function () {
 
-        var meterConverter = repository.find({ name: 'meter' })!;
+        var meterConverter = REPOSITORY.find({ name: 'meter' })!;
 
         var result = meterConverter.convert(1, meterConverter);
 
@@ -14,8 +14,8 @@ describe('converter', function () {
 
     it('Should convert centimeters to millimeters.', function () {
 
-        var centimeterConverter = repository.find({ name: 'centimeter' })!;
-        var millimeterConverter = repository.find({ name: 'millimeter' })!;
+        var centimeterConverter = REPOSITORY.find({ name: 'centimeter' })!;
+        var millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!;
 
         var millimeters = centimeterConverter.convert(10, millimeterConverter);
         expect(millimeters.valueOf()).toBe(100);
@@ -26,8 +26,8 @@ describe('converter', function () {
 
     it('Should convert inches to millimeters.', function () {
 
-        var millimeterConverter = repository.find({ name: 'millimeter' })!;
-        var inchConverter = repository.find({ system: 'imperial', name: 'inch' })!;
+        var millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!;
+        var inchConverter = REPOSITORY.find({ system: 'imperial', name: 'inch' })!;
 
         var millimeters = inchConverter.convert(1, millimeterConverter);
 
@@ -36,8 +36,8 @@ describe('converter', function () {
 
     it('Should convert millimeters to inches.', function () {
 
-        var millimeterConverter = repository.find({ name: 'millimeter' })!;
-        var inchConverter = repository.find({ system: 'imperial', name: 'inch' })!;
+        var millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!;
+        var inchConverter = REPOSITORY.find({ system: 'imperial', name: 'inch' })!;
 
         var inches = millimeterConverter.convert(25.4, inchConverter);
         expect(Math.abs(inches.valueOf() - 1) <= Number.EPSILON).toBeTruthy();
@@ -45,8 +45,8 @@ describe('converter', function () {
 
     it('Should convert fahrenheit to celsius.', function () {
 
-        var fahrenheitConverter = repository.find({ name: 'Fahrenheit' })!;
-        var celsiusConverter = repository.find({ name: 'Celsius' })!;
+        var fahrenheitConverter = REPOSITORY.find({ name: 'Fahrenheit' })!;
+        var celsiusConverter = REPOSITORY.find({ name: 'Celsius' })!;
 
         var fahrenheit = celsiusConverter.convert(0, fahrenheitConverter);
         expect(fahrenheit.valueOf()).toBe(32);
@@ -69,8 +69,8 @@ describe('converter', function () {
 
     it('Should convert gas mark to celsius.', function () {
 
-        var gasMarkConverter = repository.find({ name: 'Gas Mark' })!;
-        var celsiusConverter = repository.find({ name: 'Celsius' })!;
+        var gasMarkConverter = REPOSITORY.find({ name: 'Gas Mark' })!;
+        var celsiusConverter = REPOSITORY.find({ name: 'Celsius' })!;
 
         var gasMark = celsiusConverter.convert(135, gasMarkConverter);
         expect(gasMark.valueOf()).toBe(1);
@@ -99,8 +99,8 @@ describe('converter', function () {
 
     it('Should convert gas mark to fahrenheit.', function () {
 
-        var gasMarkConverter = repository.find({ name: 'Gas Mark' })!;
-        var fahrenheitConverter = repository.find({ name: 'Fahrenheit' })!;
+        var gasMarkConverter = REPOSITORY.find({ name: 'Gas Mark' })!;
+        var fahrenheitConverter = REPOSITORY.find({ name: 'Fahrenheit' })!;
 
         var gasMark, fahrenheit;
 
@@ -131,8 +131,8 @@ describe('converter', function () {
 
     it('Should convert UK cups to millilitres', function () {
 
-        var cupConverter = repository.find({ authority: 'UK', name: 'cup' })!;
-        var millilitreConverter = repository.find({ name: 'millilitre' })!;
+        var cupConverter = REPOSITORY.find({ authority: 'UK', name: 'cup' })!;
+        var millilitreConverter = REPOSITORY.find({ name: 'millilitre' })!;
 
 
 
@@ -142,15 +142,15 @@ describe('converter', function () {
 
     it('Should convert US Cups to grammes', function () {
 
-        const cupConverter = repository.find({ name: 'cup', authority: 'USA' })!;
-        const grammeConverter = repository.find({ name: 'gramme', authority: 'si' })!;
+        const cupConverter = REPOSITORY.find({ name: 'cup', authority: 'USA' })!;
+        const grammeConverter = REPOSITORY.find({ name: 'gramme', authority: 'si' })!;
         const density = new Real(Fraction.fromFloat(0.875));
 
-        const cups = repository.convert(cupConverter, 1000, grammeConverter, density);
+        const cups = REPOSITORY.convert(cupConverter, 1000, grammeConverter, density);
         expect(cups).toBeDefined();
         expect(cups?.asFraction().roundTo([1, 2, 3, 4, 5, 6, 8])?.toString()).toBe("4 1/4");
 
-        const grammes = repository.convert(grammeConverter, cups!, cupConverter, density);
+        const grammes = REPOSITORY.convert(grammeConverter, cups!, cupConverter, density);
         expect(grammes?.valueOf()).toBe(1000);
     });
 })

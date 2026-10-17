@@ -6,7 +6,7 @@ import temperature from './temperature';
 import utensils from './utensils';
 import food from './food';
 
-export default function (repository: ConverterRepository) {
+export function defineConverters(repository: ConverterRepository) {
     metric(repository);
     imperial(repository);
     customary(repository);
