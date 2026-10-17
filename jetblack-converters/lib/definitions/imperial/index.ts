@@ -1,4 +1,4 @@
-import type { ConverterRepository } from '../../repository';
+import type { ConverterRepository } from '../../index';
 import length from './length';
 import mass from './mass';
 import volume from './volume';

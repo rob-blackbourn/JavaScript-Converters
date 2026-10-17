@@ -1,6 +1,7 @@
 import { REPOSITORY, UnitConverter, ConverterRepository, Fraction, Real } from '../lib';
 
 describe('typed public API', () => {
+
   it('preserves exact fractions and accepts numeric operands', () => {
     const half = new Real(new Fraction(1, 2));
     expect(half.add(half).toString()).toBe('1');
@@ -27,4 +28,5 @@ describe('typed public API', () => {
     expect(REPOSITORY.convert(liters, 1, grams, scalar)?.valueOf()).toBe(1000);
     expect(() => REPOSITORY.convert(grams, 1, liters)).toThrow('scalar');
   });
+
 });

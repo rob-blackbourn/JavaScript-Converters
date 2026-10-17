@@ -1,4 +1,4 @@
-import type { ConverterRepository } from '../../repository';
+import type { ConverterRepository } from '../../index';
 import eggs from './eggs';
 
 export default function (repository: ConverterRepository) {

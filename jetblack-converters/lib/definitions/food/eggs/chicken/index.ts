@@ -1,4 +1,4 @@
-import type { ConverterRepository } from '../../../../repository';
+import type { ConverterRepository } from '../../../../index';
 import australia from './Australia';
 import canada from './Canada';
 import europe from './Europe';

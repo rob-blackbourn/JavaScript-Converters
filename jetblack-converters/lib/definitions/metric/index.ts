@@ -1,8 +1,5 @@
-import type { ConverterRepository } from '../../repository';
-import { UnitConverter } from '../../UnitConverter';
-import { DomainConverter } from '../../DomainConverter';
-
-import { Fraction, Real } from '../../numbers';
+import type { ConverterRepository } from '../../index';
+import { DomainConverter, Real, UnitConverter } from '../../index';
 
 function createSiConverters(repository: ConverterRepository, targetConverter: UnitConverter) {
 

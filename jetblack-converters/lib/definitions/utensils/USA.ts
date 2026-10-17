@@ -1,5 +1,5 @@
-import type { ConverterRepository } from '../../repository';
-import { UnitConverter } from '../../UnitConverter';
+import type { ConverterRepository } from '../../index';
+import { UnitConverter } from '../../index';
 
 export default function (repository: ConverterRepository) {
 

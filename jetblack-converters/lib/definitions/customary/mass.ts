@@ -1,7 +1,6 @@
-import type { ConverterRepository } from '../../repository';
-import { UnitConverter } from '../../UnitConverter';
+import type { ConverterRepository } from '../../index';
+import { Fraction, Real, UnitConverter } from '../../index';
 
-import { Fraction, Real } from '../../numbers';
 
 export default function (repository: ConverterRepository, system: string, authority: string) {
 

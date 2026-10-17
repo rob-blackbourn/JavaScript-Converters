@@ -1,4 +1,4 @@
-import type { ConverterRepository } from '../repository';
+import type { ConverterRepository } from '../index';
 import metric from './metric';
 import imperial from './imperial';
 import customary from './customary';
