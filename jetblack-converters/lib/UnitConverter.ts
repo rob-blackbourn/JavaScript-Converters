@@ -4,7 +4,7 @@ import { Real } from './numbers';
 import type { RealInput } from './numbers/real';
 export type Conversion = (value: Real) => Real;
 
-class UnitConverter {
+export class UnitConverter {
     private _domain: string;
     private _system: string;
     private _authority: string;
@@ -109,5 +109,3 @@ class UnitConverter {
         return null;
     }
 }
-
-export default UnitConverter;

@@ -1,5 +1,5 @@
 import type { ConverterRepository } from '../../repository';
-import UnitConverter from '../../unit-converter';
+import { UnitConverter } from '../../UnitConverter';
 
 import { Fraction, Real } from '../../numbers';
 
@@ -30,7 +30,7 @@ export default function (repository: ConverterRepository) {
         function (gasMark) {
             if (gasMark.lt(new Real(new Fraction(3, 8)))) {
                 return new Real(107);
-            } else if (gasMark.lt(new Real(new Fraction(3,4)))) {
+            } else if (gasMark.lt(new Real(new Fraction(3, 4)))) {
                 return new Real(121);
             } else {
                 gasMark = new Real(Math.round(gasMark.valueOf()));

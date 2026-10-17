@@ -1,5 +1,5 @@
 import type { ConverterRepository } from '../../repository';
-import UnitConverter from '../../unit-converter';
+import { UnitConverter } from '../../UnitConverter';
 
 import { Fraction, Real } from '../../numbers';
 

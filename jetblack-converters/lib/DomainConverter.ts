@@ -1,4 +1,4 @@
-import UnitConverter from './unit-converter';
+import { UnitConverter } from './UnitConverter';
 import { Real } from './numbers';
 import type { RealInput } from './numbers/real';
 export type DomainConversion = (value: Real, scalar?: Real) => Real;

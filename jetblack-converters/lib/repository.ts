@@ -1,4 +1,4 @@
-import UnitConverter from './unit-converter';
+import { UnitConverter } from './UnitConverter';
 import { DomainConverter } from './DomainConverter';
 import type { RealInput } from './numbers/real';
 import type { Real } from './numbers';
