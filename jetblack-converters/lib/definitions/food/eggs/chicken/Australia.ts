@@ -1,45 +1,101 @@
-import type { ConverterRepository } from '../../../../index';
-import { Real, UnitConverter } from '../../../../index';
+import type { ConverterRepository } from '../../../../index'
+import { Real, UnitConverter } from '../../../../index'
 
 export default function (repository: ConverterRepository) {
+  const domain = 'mass'
+  const system = 'food/chicken/eggs'
+  const authority = 'AU'
 
-    var grammeConverter = repository.find({ authority: 'si', system: 'metric', name: 'gramme' });
+  const grammeConverter = repository.find({
+    authority: 'si',
+    system: 'metric',
+    name: 'gramme'
+  })
 
-    var kingSizeScalar = new Real(74);
-    var jumboScalar = new Real(70);
-    var veryLargeScalar = new Real(68.35);
-    var largeScalar = new Real(62.45);
-    var mediumScalar = new Real(45.95);
+  const kingSizeScalar = new Real(74)
+  const jumboScalar = new Real(70)
+  const veryLargeScalar = new Real(68.35)
+  const largeScalar = new Real(62.45)
+  const mediumScalar = new Real(45.95)
 
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "AUS", "king size", "king size", grammeConverter,
-        function (value) {
-            return value.mul(kingSizeScalar);
-        }, function (value) {
-            return value.div(kingSizeScalar);
-        }));
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "AUS", "jumbo", "jumbo", grammeConverter,
-        function (value) {
-            return value.mul(jumboScalar);
-        }, function (value) {
-            return value.div(jumboScalar);
-        }));
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "AUS", "XL", "very large", grammeConverter,
-        function (value) {
-            return value.mul(veryLargeScalar);
-        }, function (value) {
-            return value.div(veryLargeScalar);
-        }));
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "AUS", "L", "large", grammeConverter,
-        function (value) {
-            return value.mul(largeScalar);
-        }, function (value) {
-            return value.div(largeScalar);
-        }));
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "AUS", "M", "medium", grammeConverter,
-        function (value) {
-            return value.mul(mediumScalar);
-        }, function (value) {
-            return value.div(mediumScalar);
-        }));
-
-};
+  repository.add(
+    new UnitConverter(
+      domain,
+      system,
+      authority,
+      'king size',
+      'king size',
+      grammeConverter,
+      function (value) {
+        return value.mul(kingSizeScalar)
+      },
+      function (value) {
+        return value.div(kingSizeScalar)
+      }
+    )
+  )
+  repository.add(
+    new UnitConverter(
+      domain,
+      system,
+      authority,
+      'jumbo',
+      'jumbo',
+      grammeConverter,
+      function (value) {
+        return value.mul(jumboScalar)
+      },
+      function (value) {
+        return value.div(jumboScalar)
+      }
+    )
+  )
+  repository.add(
+    new UnitConverter(
+      domain,
+      system,
+      authority,
+      'XL',
+      'very large',
+      grammeConverter,
+      function (value) {
+        return value.mul(veryLargeScalar)
+      },
+      function (value) {
+        return value.div(veryLargeScalar)
+      }
+    )
+  )
+  repository.add(
+    new UnitConverter(
+      domain,
+      system,
+      authority,
+      'L',
+      'large',
+      grammeConverter,
+      function (value) {
+        return value.mul(largeScalar)
+      },
+      function (value) {
+        return value.div(largeScalar)
+      }
+    )
+  )
+  repository.add(
+    new UnitConverter(
+      domain,
+      system,
+      authority,
+      'M',
+      'medium',
+      grammeConverter,
+      function (value) {
+        return value.mul(mediumScalar)
+      },
+      function (value) {
+        return value.div(mediumScalar)
+      }
+    )
+  )
+}

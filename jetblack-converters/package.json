@@ -35,5 +35,15 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "printWidth": 80,
+    "arrowParens": "avoid",
+    "bracketsSpacing": true,
+    "bracketSameLine": false
   }
 }

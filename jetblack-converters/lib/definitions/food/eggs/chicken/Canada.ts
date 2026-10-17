@@ -3,50 +3,55 @@ import { Real, UnitConverter } from '../../../../index';
 
 export default function (repository: ConverterRepository) {
 
-    var grammeConverter = repository.find({ authority: 'si', system: 'metric', name: 'gramme' });
+    const domain = 'mass';
+    const system = "food/chicken/eggs";
+    const authority = "CA";
 
-    var jumboScalar = new Real(70);
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "CAN", "jumbo", "jumbo", grammeConverter,
+    const grammeConverter = repository.find({ authority: 'si', system: 'metric', name: 'gramme' });
+
+    const jumboScalar = new Real(70);
+
+    repository.add(new UnitConverter(domain, system, authority, "jumbo", "jumbo", grammeConverter,
         function (value) {
             return value.mul(jumboScalar);
         }, function (value) {
             return value.div(jumboScalar);
         }));
 
-    var veryLargeScalar = new Real(66);
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "CAN", "XL", "very large", grammeConverter,
+    const veryLargeScalar = new Real(66);
+    repository.add(new UnitConverter(domain, system, authority, "XL", "very large", grammeConverter,
         function (value) {
             return value.mul(veryLargeScalar);
         }, function (value) {
             return value.div(veryLargeScalar);
         }));
 
-    var largeScalar = new Real(59);
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "CAN", "L", "large", grammeConverter,
+    const largeScalar = new Real(59);
+    repository.add(new UnitConverter(domain, system, authority, "L", "large", grammeConverter,
         function (value) {
             return value.mul(largeScalar);
         }, function (value) {
             return value.div(largeScalar);
         }));
 
-    var mediumScalar = new Real(52);
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "CAN", "M", "medium", grammeConverter,
+    const mediumScalar = new Real(52);
+    repository.add(new UnitConverter(domain, system, authority, "M", "medium", grammeConverter,
         function (value) {
             return value.mul(mediumScalar);
         }, function (value) {
             return value.div(mediumScalar);
         }));
 
-    var smallScalar = new Real(45);
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "CAN", "S", "small", grammeConverter,
+    const smallScalar = new Real(45);
+    repository.add(new UnitConverter(domain, system, authority, "S", "small", grammeConverter,
         function (value) {
             return value.mul(smallScalar);
         }, function (value) {
             return value.div(smallScalar);
         }));
 
-    var peeweeScalar = new Real(41);
-    repository.add(new UnitConverter("mass", "food/chicken/eggs", "CAN", "peewee", "peewee", grammeConverter,
+    const peeweeScalar = new Real(41);
+    repository.add(new UnitConverter(domain, system, authority, "peewee", "peewee", grammeConverter,
         function (value) {
             return value.mul(peeweeScalar);
         }, function (value) {

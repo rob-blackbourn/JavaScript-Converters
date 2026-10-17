@@ -1,7 +1,7 @@
 {
-  "typescript.tsdk": "jetblack-converters/node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.preferences.importModuleSpecifier": "relative",
+  "js/ts.tsdk.path": "jetblack-converters/node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "js/ts.preferences.importModuleSpecifier": "relative",
   "jest.rootPath": "jetblack-converters",
   "jest.jestCommandLine": "npm test --",
   "jest.useJest30": true,
@@ -14,7 +14,7 @@
     "**/coverage/**": true
   },
   "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
   "cSpell.words": [
