@@ -8,7 +8,7 @@ export default function (
 ) {
   const authority = 'US'
 
-  var usaFluidOunceConverter = repository.find({
+  const usaFluidOunceConverter = repository.find({
     authority: authority,
     name: 'fluid ounce'
   })

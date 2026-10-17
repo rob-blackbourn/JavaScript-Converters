@@ -5,7 +5,7 @@ function createSiConverters(
   repository: ConverterRepository,
   targetConverter: UnitConverter
 ) {
-  var createPrefix = function (
+  const createPrefix = function (
     symbol: string,
     name: string,
     isMultiplier: boolean,
@@ -18,7 +18,7 @@ function createSiConverters(
       scalar: scalar
     }
   }
-  var prefixes = [
+  const prefixes = [
     createPrefix('y', 'yocto', false, new Real(Math.pow(10, 24))),
     createPrefix('z', 'zepto', false, new Real(Math.pow(10, 21))),
     createPrefix('a', 'atto', false, new Real(Math.pow(10, 18))),
@@ -62,17 +62,17 @@ function createSiConverters(
 }
 
 export default function (repository: ConverterRepository) {
-  var meterConverter = repository.add(
+  const meterConverter = repository.add(
     new UnitConverter('length', 'metric', 'si', 'm', 'meter', null, null, null)
   )
   createSiConverters(repository, meterConverter)
 
-  var grammeConverter = repository.add(
+  const grammeConverter = repository.add(
     new UnitConverter('mass', 'metric', 'si', 'g', 'gramme', null, null, null)
   )
   createSiConverters(repository, grammeConverter)
 
-  var secondConverter = repository.add(
+  const secondConverter = repository.add(
     new UnitConverter(
       'temperature',
       'metric',
@@ -86,12 +86,12 @@ export default function (repository: ConverterRepository) {
   )
   createSiConverters(repository, secondConverter)
 
-  var litreConverter = repository.add(
+  const litreConverter = repository.add(
     new UnitConverter('volume', 'metric', 'si', 'l', 'litre', null, null, null)
   )
   createSiConverters(repository, litreConverter)
 
-  var kelvinConverter = repository.add(
+  const kelvinConverter = repository.add(
     new UnitConverter(
       'temperature',
       'metric',

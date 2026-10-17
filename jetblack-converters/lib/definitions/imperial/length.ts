@@ -6,11 +6,11 @@ export default function (
   system: string,
   authority: string
 ) {
-  var domain = 'length'
+  const domain = 'length'
 
-  var meterConverter = repository.find({ name: 'meter' })
-  var meterScalar = new Real(new Fraction(3048, 10000))
-  var feetConverter = repository.add(
+  const meterConverter = repository.find({ name: 'meter' })
+  const meterScalar = new Real(new Fraction(3048, 10000))
+  const feetConverter = repository.add(
     new UnitConverter(
       domain,
       system,

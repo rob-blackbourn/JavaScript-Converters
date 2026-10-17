@@ -48,7 +48,7 @@ export class Fraction {
     } else if (fraction._numerator === 0) {
       fraction._denominator = 1
     } else {
-      var factor = Fraction.gcd(fraction._numerator, fraction._denominator)
+      const factor = Fraction.gcd(fraction._numerator, fraction._denominator)
       fraction._numerator /= factor
       fraction._denominator /= factor
 
@@ -59,8 +59,8 @@ export class Fraction {
     }
   }
 
-  static parse(s: string) {
-    var result, whole, numerator, denominator
+  static parse(s: string): Fraction {
+    let result, whole, numerator, denominator
     if ((result = /^\s*([+-]?\d+)\s+(\d+)\s*\/\s*(\d+)\s*$/.exec(s))) {
       // Fraction with whole part
       whole = parseInt(result[1])
@@ -83,14 +83,14 @@ export class Fraction {
     return new Fraction(numerator + whole * denominator, denominator)
   }
 
-  toString() {
+  toString(): string {
     if (this._denominator == 0) {
       return Number.NaN.toString()
     }
 
-    var whole = Math.trunc(this._numerator / this._denominator)
+    const whole = Math.trunc(this._numerator / this._denominator)
     if (whole) {
-      var numerator = this._numerator - whole * this._denominator
+      const numerator = this._numerator - whole * this._denominator
       if (numerator == 0) {
         return whole.toString()
       } else {
@@ -180,14 +180,14 @@ export class Fraction {
   static fromFloat(x: number, tolerance?: number) {
     if (!tolerance) tolerance = 1.0e-6
 
-    var h1 = 1,
+    let h1 = 1,
       h2 = 0,
       k1 = 0,
       k2 = 1
-    var b = x
+    let b = x
     do {
-      var a = Math.floor(b)
-      var aux = h1
+      const a = Math.floor(b)
+      let aux = h1
       h1 = a * h1 + h2
       h2 = aux
       aux = k1
@@ -200,14 +200,14 @@ export class Fraction {
   }
 
   roundTo(denominators: readonly number[]): Fraction | null {
-    var min = new Fraction(1, 1)
-    var best: Fraction | null = null
+    let min = new Fraction(1, 1)
+    let best: Fraction | null = null
     for (let denominator of denominators) {
-      var a = this.numerator * denominator
-      var b = this.denominator * denominator
-      var c = Math.round(a / this.denominator)
-      var f = new Fraction(c, denominator)
-      var error = f.sub(this).abs()
+      const a = this.numerator * denominator
+      const b = this.denominator * denominator
+      const c = Math.round(a / this.denominator)
+      const f = new Fraction(c, denominator)
+      const error = f.sub(this).abs()
       if (error.lt(min)) {
         best = f
         min = error
