@@ -45,7 +45,7 @@ describe('converter', function () {
         expect(Math.abs(inches.valueOf() - 1) <= Number.EPSILON).toBeTruthy();
     });
 
-    it('Should convert fahrenheit to celcius.', function () {
+    it('Should convert fahrenheit to celsius.', function () {
 
         var fahrenheitConverter = repository.find({ name: 'Fahrenheit' })!;
         var celsiusConverter = repository.find({ name: 'Celsius' })!;
@@ -69,7 +69,7 @@ describe('converter', function () {
         expect(fahrenheit.valueOf()).toBe(-40);
     });
 
-    it('Should convert gas mark to celcius.', function () {
+    it('Should convert gas mark to celsius.', function () {
 
         var gasMarkConverter = repository.find({ name: 'Gas Mark' })!;
         var celsiusConverter = repository.find({ name: 'Celsius' })!;
@@ -136,9 +136,23 @@ describe('converter', function () {
         var cupConverter = repository.find({ authority: 'UK', name: 'cup' })!;
         var millilitreConverter = repository.find({ name: 'millilitre' })!;
 
-        
+
 
         var millilitres = cupConverter.convert(1, millilitreConverter);
         expect(Math.round(millilitres.valueOf() * 10) / 10).toBe(284.1);
+    });
+
+    it('Should convert US Cups to grammes', function () {
+
+        const cupConverter = repository.find({ name: 'cup', authority: 'USA' })!;
+        const grammeConverter = repository.find({ name: 'gramme', authority: 'si' })!;
+        const density = new Real(Fraction.fromFloat(0.875));
+
+        const cups = repository.convert(cupConverter, 1000, grammeConverter, density);
+        expect(cups).toBeDefined();
+        expect(cups?.asFraction().roundTo([1, 2, 3, 4, 5, 6, 8])?.toString()).toBe("4 1/4");
+
+        const grammes = repository.convert(grammeConverter, cups!, cupConverter, density);
+        expect(grammes?.valueOf()).toBe(1000);
     });
 })
