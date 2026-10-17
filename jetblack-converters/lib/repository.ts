@@ -86,9 +86,7 @@ export class ConverterRepository {
       const filtered = ConverterRepository.filter(
         possibles,
         this._defaultClassification,
-        function (converter) {
-          return converter.system
-        }
+        converter => converter.system
       )
       if (filtered.length > 0) {
         possibles = filtered
@@ -99,9 +97,7 @@ export class ConverterRepository {
       const filtered = ConverterRepository.filter(
         possibles,
         this._defaultAuthority,
-        function (converter) {
-          return converter.authority
-        }
+        converter => converter.authority
       )
       if (filtered.length > 0) {
         possibles = filtered
@@ -116,37 +112,27 @@ export class ConverterRepository {
     possibles = ConverterRepository.filter(
       possibles,
       criteria.domain,
-      function (converter) {
-        return converter.domain
-      }
+      converter => converter.domain
     )
     possibles = ConverterRepository.filter(
       possibles,
       criteria.system,
-      function (converter) {
-        return converter.system
-      }
+      converter => converter.system
     )
     possibles = ConverterRepository.filter(
       possibles,
       criteria.authority,
-      function (converter) {
-        return converter.authority
-      }
+      converter => converter.authority
     )
     possibles = ConverterRepository.filter(
       possibles,
       criteria.symbol,
-      function (converter) {
-        return converter.symbol
-      }
+      converter => converter.symbol
     )
     possibles = ConverterRepository.filter(
       possibles,
       criteria.name,
-      function (converter) {
-        return converter.name
-      }
+      converter => converter.name
     )
 
     return possibles

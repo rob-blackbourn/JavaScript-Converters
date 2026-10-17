@@ -1,24 +1,24 @@
 import { Fraction } from '../lib/numbers'
 
-describe('numbers', function () {
-  it('Should construct a simple fraction', function () {
+describe('numbers', () => {
+  it('Should construct a simple fraction', () => {
     const f1 = new Fraction(1, 2)
     expect(f1.numerator).toBe(1)
     expect(f1.denominator).toBe(2)
   })
 
-  it('Should simplify.', function () {
+  it('Should simplify.', () => {
     const f1 = new Fraction(2, 4)
     expect(f1.numerator).toBe(1)
     expect(f1.denominator).toBe(2)
   })
 
-  it('should return NaN', function () {
+  it('should return NaN', () => {
     const f = new Fraction(1, 0)
     expect(f.isNaN()).toBeTruthy()
   })
 
-  it('should return construct fractions of value 1', function () {
+  it('should return construct fractions of value 1', () => {
     for (let i = 1; i <= 10; ++i) {
       const f = new Fraction(i, i)
       expect(1).toBe(f.numerator)
@@ -26,7 +26,7 @@ describe('numbers', function () {
     }
   })
 
-  it('should normalize negatives', function () {
+  it('should normalize negatives', () => {
     const f1 = new Fraction(-1, -2)
     expect(f1.numerator).toBe(1)
     expect(f1.denominator).toBe(2)
@@ -40,7 +40,7 @@ describe('numbers', function () {
     expect(f3.denominator).toBe(2)
   })
 
-  it('should print and parse', function () {
+  it('should print and parse', () => {
     const a1 = new Fraction(3, 2)
     const a2 = a1.toString()
     const a3 = Fraction.parse(a2)
@@ -63,7 +63,7 @@ describe('numbers', function () {
     expect(c2).toBe(c4)
   })
 
-  it('Should round fraction to denominator', function () {
+  it('Should round fraction to denominator', () => {
     let f1,
       f2,
       adj = new Fraction(1, 100)

@@ -41,7 +41,7 @@ function createSiConverters(
     createPrefix('Y', 'yotta', true, new Real(Math.pow(10, 24)))
   ]
 
-  prefixes.map(function (prefix) {
+  prefixes.map(prefix => {
     repository.add(
       new UnitConverter(
         targetConverter.domain,

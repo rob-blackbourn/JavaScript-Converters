@@ -1,7 +1,7 @@
 import { REPOSITORY, Fraction, Real } from '../lib'
 
-describe('converter', function () {
-  it('Should convert meters to meters.', function () {
+describe('converter', () => {
+  it('Should convert meters to meters.', () => {
     const meterConverter = REPOSITORY.find({ name: 'meter' })!
 
     const result = meterConverter.convert(1, meterConverter)
@@ -9,7 +9,7 @@ describe('converter', function () {
     expect(result.valueOf()).toBe(1)
   })
 
-  it('Should convert centimeters to millimeters.', function () {
+  it('Should convert centimeters to millimeters.', () => {
     const centimeterConverter = REPOSITORY.find({ name: 'centimeter' })!
     const millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!
 
@@ -20,7 +20,7 @@ describe('converter', function () {
     expect(centimeters.valueOf()).toBe(10)
   })
 
-  it('Should convert inches to millimeters.', function () {
+  it('Should convert inches to millimeters.', () => {
     const millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!
     const inchConverter = REPOSITORY.find({ system: 'imperial', name: 'inch' })!
 
@@ -29,7 +29,7 @@ describe('converter', function () {
     expect(millimeters.valueOf()).toBe(25.4)
   })
 
-  it('Should convert millimeters to inches.', function () {
+  it('Should convert millimeters to inches.', () => {
     const millimeterConverter = REPOSITORY.find({ name: 'millimeter' })!
     const inchConverter = REPOSITORY.find({ system: 'imperial', name: 'inch' })!
 
@@ -37,7 +37,7 @@ describe('converter', function () {
     expect(Math.abs(inches.valueOf() - 1) <= Number.EPSILON).toBeTruthy()
   })
 
-  it('Should convert fahrenheit to celsius.', function () {
+  it('Should convert fahrenheit to celsius.', () => {
     const fahrenheitConverter = REPOSITORY.find({ name: 'Fahrenheit' })!
     const celsiusConverter = REPOSITORY.find({ name: 'Celsius' })!
 
@@ -60,7 +60,7 @@ describe('converter', function () {
     expect(fahrenheit.valueOf()).toBe(-40)
   })
 
-  it('Should convert gas mark to celsius.', function () {
+  it('Should convert gas mark to celsius.', () => {
     const gasMarkConverter = REPOSITORY.find({ name: 'Gas Mark' })!
     const celsiusConverter = REPOSITORY.find({ name: 'Celsius' })!
 
@@ -89,7 +89,7 @@ describe('converter', function () {
     expect(gasMark.eq(new Real(new Fraction(1, 2)))).toBeTruthy()
   })
 
-  it('Should convert gas mark to fahrenheit.', function () {
+  it('Should convert gas mark to fahrenheit.', () => {
     const gasMarkConverter = REPOSITORY.find({ name: 'Gas Mark' })!
     const fahrenheitConverter = REPOSITORY.find({ name: 'Fahrenheit' })!
 
@@ -126,7 +126,7 @@ describe('converter', function () {
     expect(gasMark.eq(new Real(new Fraction(1, 2)))).toBeTruthy()
   })
 
-  it('Should convert UK cups to millilitres', function () {
+  it('Should convert UK cups to millilitres', () => {
     const cupConverter = REPOSITORY.find({ authority: 'UK', name: 'cup' })!
     const millilitreConverter = REPOSITORY.find({ name: 'millilitre' })!
 
@@ -134,7 +134,7 @@ describe('converter', function () {
     expect(Math.round(millilitres.valueOf() * 10) / 10).toBe(284.1)
   })
 
-  it('Should convert US Cups to grammes', function () {
+  it('Should convert US Cups to grammes', () => {
     const cupConverter = REPOSITORY.find({ name: 'cup', authority: 'US' })!
     const grammeConverter = REPOSITORY.find({
       name: 'gramme',
