@@ -1,5 +1,3 @@
-
-
 import { repository, Fraction, Real } from '../lib';
 
 
